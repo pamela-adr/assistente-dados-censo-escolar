@@ -70,3 +70,28 @@ A distribuição dos registros com esses indicadores vazios por situação de fu
 Os resultados indicam que a ausência dos indicadores está concentrada em escolas paralisadas, mas também ocorre em escolas em atividade e extintas no ano do Censo. Por isso, os valores ausentes não serão automaticamente convertidos em zero nem os registros serão excluídos sem investigação adicional.
 
 **Limitação:** esta análise descreve os dados observados e não determina, por si só, a causa dos valores ausentes. O tratamento será definido após a consulta às regras e aos metadados oficiais do INEP.
+
+## Variáveis utilizadas e definições
+
+As definições das variáveis foram consultadas no dicionário dos microdados do Censo Escolar 2024, disponibilizado pelo Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP).
+
+- `QT_MAT_BAS`: número de matrículas da educação básica, incluindo as etapas e modalidades descritas pelo INEP e excluindo matrículas em turmas exclusivamente de atividade complementar e exclusivamente de Atendimento Educacional Especializado (AEE).
+- `QT_TUR_BAS`: número de turmas da educação básica.
+- `TP_DEPENDENCIA`: código da dependência administrativa da escola:
+  - `1`: Federal.
+  - `2`: Estadual.
+  - `3`: Municipal.
+  - `4`: Privada.
+- `TP_SITUACAO_FUNCIONAMENTO`: situação de funcionamento da escola:
+  - `1`: Em atividade.
+  - `2`: Paralisada.
+  - `3`: Extinta no ano do Censo.
+  - `4`: Extinta em anos anteriores.
+
+### Cuidados com os dados ausentes
+
+A análise exploratória identificou 36.259 registros sem valores em `QT_MAT_BAS`, `QT_TUR_BAS` e `QT_DOC_BAS`. A ausência desses valores também ocorre em registros de escolas em atividade.
+
+Por esse motivo, os valores ausentes não serão automaticamente interpretados como zero. A regra de tratamento será definida e documentada antes da avaliação das consultas.
+
+**Fonte:** INEP — Microdados do Censo Escolar da Educação Básica 2024 e respectivo dicionário de dados.

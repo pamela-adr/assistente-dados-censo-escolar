@@ -54,3 +54,19 @@ As funcionalidades descritas neste documento são objetivos previstos e ainda pr
 ## 8. Execução
 
 As instruções de instalação e execução serão adicionadas após a definição e implementação do ambiente do projeto.
+
+## Análise exploratória dos dados
+
+A análise inicial dos microdados do Censo Escolar 2024 identificou 215.545 registros e 426 colunas no arquivo principal.
+
+O campo `CO_ENTIDADE` apresentou 215.545 valores únicos e nenhum valor vazio. Na variável `QT_MAT_BAS`, foram encontrados 36.259 valores vazios. Esses mesmos registros também apresentam valores vazios em `QT_TUR_BAS` e `QT_DOC_BAS`.
+
+A distribuição dos registros com esses indicadores vazios por situação de funcionamento foi:
+
+- Em atividade: 1.779 registros.
+- Paralisada: 31.321 registros.
+- Extinta no ano do Censo: 3.159 registros.
+
+Os resultados indicam que a ausência dos indicadores está concentrada em escolas paralisadas, mas também ocorre em escolas em atividade e extintas no ano do Censo. Por isso, os valores ausentes não serão automaticamente convertidos em zero nem os registros serão excluídos sem investigação adicional.
+
+**Limitação:** esta análise descreve os dados observados e não determina, por si só, a causa dos valores ausentes. O tratamento será definido após a consulta às regras e aos metadados oficiais do INEP.

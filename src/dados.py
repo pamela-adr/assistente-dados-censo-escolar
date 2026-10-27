@@ -1,6 +1,8 @@
 from pathlib import Path
 
 import duckdb
+import sqlglot
+from sqlglot import exp
 try:
     from .seguranca import validar_sql
 except ImportError:
@@ -50,19 +52,42 @@ def contar_registros() -> int:
 
     return resultado[0]
 
-def consultar_censo(sql:str) -> list:
-    """Executa uma consulta SQL no arquivo do Censo Escolar."""
+
+def consultar_censo(sql: str) -> list:
+    """Executa uma consulta SQL validada, limitada a 1.000 resultados."""
     valido, mensagem = validar_sql(sql)
 
     if not valido:
         raise ValueError(mensagem)
 
+    consultas = sqlglot.parse(sql, read="duckdb")
+    consulta = consultas[0]
 
+    # Adiciona o limite usando a estrutura do SQL.
+    limite = consulta.args.get("limit")
+
+    if limite is None:
+        consulta = consulta.limit(1000)
+    else:
+        expressao_limite = limite.expression
+
+        if (
+            not isinstance(expressao_limite, exp.Literal)
+            or not expressao_limite.is_int
+        ):
+            raise ValueError("O limite da consulta deve ser um número inteiro.")
+
+        quantidade = int(expressao_limite.this)
+
+        if quantidade > 1000:
+            consulta = consulta.limit(1000)
+
+    sql_seguro = consulta.sql(dialect="duckdb")
     arquivo = localizar_arquivo_censo()
 
     with conectar_duckdb() as conexao:
         resultado = conexao.execute(
-            sql,
+            sql_seguro,
             [str(arquivo)],
         ).fetchall()
 

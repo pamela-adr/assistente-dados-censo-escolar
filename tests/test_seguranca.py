@@ -30,6 +30,78 @@ class TestarSegurancaSQL(unittest.TestCase):
         with self.assertRaises(ValueError):
             consultar_censo("DELETE FROM escolas")
 
+    def test_bloqueia_leitura_de_outro_arquivo(self):
+        sql = "SELECT * FROM read_csv('outro_arquivo.csv')"
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_bloqueia_tabela_nao_autorizada(self):
+        valido, _ = validar_sql("SELECT * FROM escolas")
+        self.assertFalse(valido)
+
+    def test_bloqueia_duas_fontes_de_dados(self):
+        sql = """
+        SELECT *
+        FROM read_csv(?, delim=';') AS a
+        JOIN read_csv('outro_arquivo.csv', delim=';') AS b
+        ON TRUE
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_bloqueia_leitura_de_json(self):
+        sql = "SELECT * FROM read_json('outro_arquivo.json')"
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_bloqueia_leitura_de_parquet(self):
+        sql = "SELECT * FROM read_parquet('outro_arquivo.parquet')"
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_aceita_leitura_parametrizada_do_censo(self):
+        sql = """
+        SELECT NO_UF
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertTrue(valido)
+
+    def test_bloqueia_funcao_nao_autorizada(self):
+        sql = """
+        SELECT current_setting('memory_limit')
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_aceita_funcao_agregada(self):
+        sql = """
+        SELECT COUNT(*), SUM(1), AVG(1)
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertTrue(valido)
+
+    def test_bloqueia_limite_negativo(self):
+        with self.assertRaises(ValueError):
+            consultar_censo("""
+                SELECT NO_UF
+                FROM read_csv(
+                    ?, delim=';', encoding='latin-1',
+                    header=true, all_varchar=true
+                )
+                LIMIT -1
+            """)
 
 if __name__ == "__main__":
     unittest.main()    

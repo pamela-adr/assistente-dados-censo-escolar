@@ -162,6 +162,16 @@ class TestarSegurancaSQL(unittest.TestCase):
             resposta["estimativa_custo"],
             estimativa_falsa,
         )
+    def test_bloqueia_duas_fontes_parametrizadas(self):
+        sql = """
+        SELECT *
+        FROM read_csv(?, delim=';') AS a
+        JOIN read_csv(?, delim=';') AS b
+        ON TRUE
+        """
+
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
 
 if __name__ == "__main__":
     unittest.main()

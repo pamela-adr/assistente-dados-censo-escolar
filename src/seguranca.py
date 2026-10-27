@@ -24,6 +24,9 @@ def validar_sql(sql: str) -> tuple[bool, str]:
 
     tabelas = list(consulta.find_all(exp.Table))
 
+    if len(tabelas) > 1:
+        return False, "A consulta pode usar apenas uma fonte de dados."
+
     if not tabelas:
         funcoes = list(consulta.find_all(exp.Func))
 

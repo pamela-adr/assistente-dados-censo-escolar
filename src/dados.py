@@ -1,7 +1,10 @@
 from pathlib import Path
 
 import duckdb
-
+try:
+    from .seguranca import validar_sql
+except ImportError:
+    from seguranca import validar_sql
 
 def localizar_arquivo_censo() -> Path:
     """Localiza o CSV do Censo Escolar 2024 na pasta Downloads."""
@@ -49,6 +52,12 @@ def contar_registros() -> int:
 
 def consultar_censo(sql:str) -> list:
     """Executa uma consulta SQL no arquivo do Censo Escolar."""
+    valido, mensagem = validar_sql(sql)
+
+    if not valido:
+        raise ValueError(mensagem)
+
+
     arquivo = localizar_arquivo_censo()
 
     with conectar_duckdb() as conexao:

@@ -102,6 +102,39 @@ class TestarSegurancaSQL(unittest.TestCase):
                 )
                 LIMIT -1
             """)
+    def test_estimativa_custo_consulta_simples(self):
+        from src.dados import estimar_custo_consulta
+
+        resultado = estimar_custo_consulta("SELECT 1")
+
+        self.assertEqual(resultado["nivel"], "baixo")
+        self.assertIn("pontuacao", resultado)
+        self.assertIn("fatores", resultado)
+
+    def test_estimativa_custo_consulta_com_agrupamento(self):
+        from src.dados import estimar_custo_consulta
+
+        sql = """
+            SELECT NO_UF, COUNT(*)
+            FROM read_csv(
+                ?, delim=';', encoding='latin-1',
+                header=true, all_varchar=true
+            )
+            GROUP BY NO_UF
+            ORDER BY COUNT(*) DESC
+        """
+
+        resultado = estimar_custo_consulta(sql)
+
+        self.assertEqual(resultado["nivel"], "alto")
+        self.assertIn("agrupamento de registros", resultado["fatores"])
+        self.assertIn("ordenação dos resultados", resultado["fatores"])
+
+    def test_estimativa_rejeita_sql_proibido(self):
+        from src.dados import estimar_custo_consulta
+
+        with self.assertRaises(ValueError):
+            estimar_custo_consulta("DELETE FROM escolas")
 
 if __name__ == "__main__":
     unittest.main()    

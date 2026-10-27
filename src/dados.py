@@ -32,6 +32,56 @@ def conectar_duckdb() -> duckdb.DuckDBPyConnection:
     """Cria uma conexão DuckDB em memória"""
     return duckdb.connect()
 
+def estimar_custo_consulta(sql: str) -> dict:
+    """Estima a complexidade estrutural de uma consulta SQL."""
+
+    valido, mensagem = validar_sql(sql)
+
+    if not valido:
+        raise ValueError(mensagem)
+
+    consultas = sqlglot.parse(sql, read="duckdb")
+    consulta = consultas[0]
+
+    pontos = 1
+    fatores = ["custo básico da consulta"]
+
+    # A leitura da fonte de dados exige processamento.
+    if list(consulta.find_all(exp.Table)):
+        pontos += 2
+        fatores.append("leitura da fonte de dados")
+
+    # Agrupar registros pode exigir processamento adicional.
+    if consulta.args.get("group") is not None:
+        pontos += 2
+        fatores.append("agrupamento de registros")
+
+    # Ordenar resultados também pode exigir processamento.
+    if consulta.args.get("order") is not None:
+        pontos += 2
+        fatores.append("ordenação dos resultados")
+
+    # DISTINCT pode exigir comparação entre registros.
+    if consulta.args.get("distinct") is not None:
+        pontos += 1
+        fatores.append("remoção de duplicados")
+
+    if pontos <= 3:
+        nivel = "baixo"
+    elif pontos <= 5:
+        nivel = "médio"
+    else:
+        nivel = "alto"
+
+    return {
+        "pontuacao": pontos,
+        "nivel": nivel,
+        "fatores": fatores,
+        "aviso": (
+            "Estimativa heurística; não representa o custo real "
+            "de execução do DuckDB."
+        ),
+    }
 
 
 def contar_registros() -> int:

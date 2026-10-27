@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import duckdb
@@ -29,6 +28,7 @@ def conectar_duckdb() -> duckdb.DuckDBPyConnection:
     return duckdb.connect()
 
 
+
 def contar_registros() -> int:
     """Conta as linhas do arquivo do Censo Escolar."""
     arquivo = localizar_arquivo_censo()
@@ -38,15 +38,43 @@ def contar_registros() -> int:
             """
             SELECT COUNT(*)
             FROM read_csv(
-            ?, delim=';', encoding='latin-1',
-            header=true, all_varchar=true
-        )
-        """,
-        [str(arquivo)],
+                ?, delim=';', encoding='latin-1',
+                header=true, all_varchar=true
+            )
+            """,
+            [str(arquivo)],
         ).fetchone()
 
     return resultado[0]
 
+def consultar_censo(sql:str) -> list:
+    """Executa uma consulta SQL no arquivo do Censo Escolar."""
+    arquivo = localizar_arquivo_censo()
+
+    with conectar_duckdb() as conexao:
+        resultado = conexao.execute(
+            sql,
+            [str(arquivo)],
+        ).fetchall()
+
+    return resultado
+
 
 if __name__ == "__main__":
-    print("Total de registros:", contar_registros())
+    sql = """
+        SELECT
+            NO_UF,
+            COUNT(*) AS quantidade_registros
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        GROUP BY NO_UF
+        ORDER BY quantidade_registros DESC
+        LIMIT 5
+    """
+
+    resultado = consultar_censo(sql)
+
+    for linha in resultado:
+        print(linha)

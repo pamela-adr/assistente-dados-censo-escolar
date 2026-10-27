@@ -143,6 +143,19 @@ def consultar_censo(sql: str) -> list:
 
     return resultado
 
+def consultar_censo_com_custo(sql: str):
+    """Executa uma consulta e retorna também sua estimativa de custo."""
+
+    estimativa = estimar_custo_consulta(sql)
+    resultado = consultar_censo(sql)
+
+    return {
+        "resultado": resultado,
+        "estimativa_custo": estimativa,
+    }
+
+
+
 
 if __name__ == "__main__":
     sql = """

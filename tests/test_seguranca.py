@@ -136,5 +136,32 @@ class TestarSegurancaSQL(unittest.TestCase):
         with self.assertRaises(ValueError):
             estimar_custo_consulta("DELETE FROM escolas")
 
+    def test_consulta_censo_com_custo_retorna_resultado_e_estimativa(self):
+        from unittest.mock import patch
+        from src.dados import consultar_censo_com_custo
+
+        resultado_falso = [("São Paulo", 100)]
+        estimativa_falsa = {
+            "pontuacao": 3,
+            "nivel": "baixo",
+            "fatores": ["custo básico da consulta"],
+            "aviso": "Estimativa de teste.",
+        }
+
+        with patch(
+            "src.dados.estimar_custo_consulta",
+            return_value=estimativa_falsa,
+        ), patch(
+            "src.dados.consultar_censo",
+            return_value=resultado_falso,
+        ):
+            resposta = consultar_censo_com_custo("SELECT 1")
+
+        self.assertEqual(resposta["resultado"], resultado_falso)
+        self.assertEqual(
+            resposta["estimativa_custo"],
+            estimativa_falsa,
+        )
+
 if __name__ == "__main__":
-    unittest.main()    
+    unittest.main()

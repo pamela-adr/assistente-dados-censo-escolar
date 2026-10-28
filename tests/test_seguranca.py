@@ -81,6 +81,94 @@ class TestarSegurancaSQL(unittest.TestCase):
         valido, _ = validar_sql(sql)
         self.assertFalse(valido)
 
+    def test_bloqueia_subconsulta_com_outra_fonte(self):
+        sql = """
+        SELECT NO_UF
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        WHERE NO_UF IN (
+            SELECT NO_UF
+            FROM read_csv('outro_arquivo.csv')
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+    
+    def test_bloqueia_select_asterisco(self):
+        sql = """
+        SELECT *
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    
+    def test_bloqueia_from_duplicado(self):
+        sql = """
+        SELECT NO_UF, COUNT(*) AS quantidade_escolas
+        FROM FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        GROUP BY NO_UF
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_limita_resultado_a_mil_registros(self):
+        from unittest.mock import patch
+
+        resultado_falso = [(i,) for i in range(1000)]
+
+        with patch(
+            "src.dados.localizar_arquivo_censo"
+        ), patch(
+            "src.dados.conectar_duckdb"
+        ) as mock_conectar:
+            conexao = mock_conectar.return_value.__enter__.return_value
+            conexao.execute.return_value.fetchall.return_value = resultado_falso
+
+            resultado = consultar_censo("""
+                SELECT NO_UF
+                FROM read_csv(
+                    ?, delim=';', encoding='latin-1',
+                    header=true, all_varchar=true
+                )
+                LIMIT 5000
+            """)
+
+        self.assertLessEqual(len(resultado), 1000)
+        sql_executado = conexao.execute.call_args.args[0]
+        self.assertIn("LIMIT 1000", sql_executado.upper())
+    
+    def test_bloqueia_coluna_nao_autorizada(self):
+        sql = """
+        SELECT coluna_inventada
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_aceita_coluna_permitida_com_alias(self):
+        sql = """
+        SELECT NO_UF AS estado
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertTrue(valido)
+
+
     def test_aceita_funcao_agregada(self):
         sql = """
         SELECT COUNT(*), SUM(1), AVG(1)
@@ -170,6 +258,27 @@ class TestarSegurancaSQL(unittest.TestCase):
         ON TRUE
         """
 
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_bloqueia_read_csv_auto(self):
+        sql = """
+        SELECT NO_UF
+        FROM read_csv_auto(
+            ?, delim=';', header=true
+        )
+        """
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
+
+    def test_bloqueia_informacao_do_usuario_sql(self):
+        sql = """
+        SELECT CURRENT_USER
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        )
+        """
         valido, _ = validar_sql(sql)
         self.assertFalse(valido)
 

@@ -32,6 +32,25 @@ def conectar_duckdb() -> duckdb.DuckDBPyConnection:
     """Cria uma conexão DuckDB em memória"""
     return duckdb.connect()
 
+def obter_esquema_censo() -> list[str]:
+    """Retorna os nomes das colunas do Censo Escolar."""
+    arquivo = localizar_arquivo_censo()
+
+    with conectar_duckdb() as conexao:
+        resultado = conexao.execute(
+            """
+            DESCRIBE
+            SELECT *
+            FROM read_csv(
+                ?, delim=';', encoding='latin-1',
+                header=true, all_varchar=true
+            )
+            """,
+            [str(arquivo)],
+        ).fetchall()
+
+    return [coluna[0] for coluna in resultado]
+
 def estimar_custo_consulta(sql: str) -> dict:
     """Estima a complexidade estrutural de uma consulta SQL."""
 

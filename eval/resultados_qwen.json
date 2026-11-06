@@ -56,5 +56,41 @@
         "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
         "status": "executada",
         "resultado_qwen": 9998443
+    },
+    {
+        "id": 4,
+        "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
+        "status": "executada",
+        "resultado_qwen": 33863
+    },
+    {
+        "id": 5,
+        "pergunta": "Quantos registros existem no estado de Minas Gerais?",
+        "status": "executada",
+        "resultado_qwen": 23936
+    },
+    {
+        "id": 6,
+        "pergunta": "Quantos registros possuem o nome do município preenchido?",
+        "status": "executada",
+        "resultado_qwen": 215545
+    },
+    {
+        "id": 7,
+        "pergunta": "Quantos registros possuem código de entidade preenchido?",
+        "status": "executada",
+        "resultado_qwen": 215545
+    },
+    {
+        "id": 8,
+        "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": [
+            ["Amapá", 953],
+            ["Roraima", 958],
+            ["Distrito Federal", 1360],
+            ["Rondônia", 1424],
+            ["Acre", 1659]
+        ]
     }
 ]

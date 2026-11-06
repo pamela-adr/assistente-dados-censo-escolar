@@ -82,14 +82,25 @@ def comparar_agrupamento(
     return referencia == qwen
 
 def comparar_ordenacao(resultado_referencia, resultado_qwen):
-    """Compara os cinco estados mais bem classificados."""
+    """Compara os estados e suas quantidades, respeitando a ordem."""
 
     referencia = [
-        {"estado": estado, "registros": quantidade}
+        (estado, quantidade)
         for estado, quantidade in resultado_referencia
     ]
 
-    return referencia == resultado_qwen
+    if resultado_qwen and isinstance(resultado_qwen[0], dict):
+        qwen = [
+            (item["estado"], item["registros"])
+            for item in resultado_qwen
+        ]
+    else:
+        qwen = [
+            (estado, quantidade)
+            for estado, quantidade in resultado_qwen
+        ]
+
+    return referencia == qwen
 
 
 def executar_referencia(sql: str):

@@ -1,3 +1,12 @@
+# Assistente de Dados Educacionais do Brasil com Text-to-SQL Seguro
+
+**Curso:** EAD_PROINT_100.DD-ADS-PI-10-74.2026.74
+
+**Disciplina:** Projeto Integrador
+
+**Integrante 1:** Pamela Adrielly — RA: 2408194
+
+---
 
 # Assistente de Dados — Censo Escolar
 

@@ -1,0 +1,100 @@
+[
+    {
+        "id": 1,
+        "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar o total retornado com a contagem real do arquivo."
+    },
+    {
+        "id": 2,
+        "pergunta": "Quantos registros existem por estado?",
+        "sql_referencia": "SELECT NO_UF, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF LIMIT 1000",
+        "tipo": "agrupamento",
+        "validacao": "Comparar as contagens de cada estado com a consulta de referência."
+    },
+    {
+        "id": 3,
+        "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
+        "sql_referencia": "SELECT NO_UF, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY quantidade_registros DESC LIMIT 5",
+        "tipo": "ordenação",
+        "validacao": "Comparar os cinco estados e suas contagens com a consulta de referência."
+    },
+    {
+        "id": 4,
+        "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'São Paulo' LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar o total de registros de São Paulo com a consulta de referência."
+    },
+    {
+        "id": 5,
+        "pergunta": "Quantos registros existem no estado de Minas Gerais?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'Minas Gerais' LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar o total de registros de Minas Gerais com a consulta de referência."
+    },
+    {
+        "id": 6,
+        "pergunta": "Quantos registros possuem o nome do município preenchido?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NULLIF(NO_MUNICIPIO, '') IS NOT NULL LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar a quantidade de registros com município preenchido."
+    },
+    {
+        "id": 7,
+        "pergunta": "Quantos registros possuem o código da entidade preenchido?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE CO_ENTIDADE IS NOT NULL LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar a quantidade de registros com código da entidade preenchido."
+    },
+    {
+        "id": 8,
+        "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
+        "sql_referencia": "SELECT NO_UF, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY quantidade_registros ASC LIMIT 5",
+        "tipo": "ordenação",
+        "validacao": "Comparar os cinco estados com menores contagens e sua ordem."
+    },
+    {
+        "id": 9,
+        "pergunta": "Quantos registros existem no estado da Bahia?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'Bahia' LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar o total de registros da Bahia com a consulta de referência."
+    },
+    {
+        "id": 10,
+        "pergunta": "Quantos registros existem no estado do Paraná?",
+        "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'Paraná' LIMIT 1",
+        "tipo": "contagem",
+        "validacao": "Comparar o total de registros do Paraná com a consulta de referência."
+    },
+    {
+        "id": 11,
+        "pergunta": "Quais são os dez estados com mais registros no Censo Escolar?",
+        "sql_referencia": "SELECT NO_UF, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY quantidade_registros DESC LIMIT 10",
+        "tipo": "ordenação",
+        "validacao": "Comparar os dez estados e suas contagens com a consulta de referência."
+    },
+    {
+    "id": 12,
+    "pergunta": "Quantas siglas de estados diferentes existem no Censo Escolar de 2024?",
+    "sql_referencia": "SELECT COUNT(DISTINCT SG_UF) AS total_siglas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de siglas distintas com a consulta de referência."
+    },
+    {
+    "id": 13,
+    "pergunta": "Quantos municípios diferentes aparecem no Censo Escolar de 2024?",
+    "sql_referencia": "SELECT COUNT(DISTINCT CO_MUNICIPIO) AS total_municipios FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de códigos de municípios distintos com a consulta de referência."
+},
+{
+    "id": 14,
+    "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
+    "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE SG_UF = 'SP' LIMIT 1",
+    "tipo": "soma",
+    "validacao": "Comparar o total de matrículas de São Paulo com a consulta de referência."
+}
+]

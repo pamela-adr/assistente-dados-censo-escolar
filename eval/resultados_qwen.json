@@ -1,0 +1,60 @@
+[
+    {
+        "id": 1,
+        "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
+        "status": "executada",
+        "resultado_qwen": 215545
+    },
+    {
+        "id": 2,
+        "pergunta": "Quantos registros existem em cada estado?",
+        "status": "executada",
+        "resultado_qwen": [
+            {"estado": "Piauí", "registros": 5632},
+            {"estado": "Maranhão", "registros": 13499},
+    {"estado": "Mato Grosso", "registros": 3191},
+    {"estado": "Rio Grande do Sul", "registros": 11262},
+    {"estado": "Espírito Santo", "registros": 3970},
+    {"estado": "Santa Catarina", "registros": 7420},
+    {"estado": "Rondônia", "registros": 1424},
+    {"estado": "Paraná", "registros": 10022},
+    {"estado": "Pará", "registros": 11848},
+    {"estado": "Bahia", "registros": 19621},
+    {"estado": "Tocantins", "registros": 2258},
+    {"estado": "Distrito Federal", "registros": 1360},
+    {"estado": "Acre", "registros": 1659},
+    {"estado": "Pernambuco", "registros": 9936},
+    {"estado": "Alagoas", "registros": 3465},
+    {"estado": "Sergipe", "registros": 2489},
+    {"estado": "São Paulo", "registros": 33863},
+    {"estado": "Roraima", "registros": 958},
+    {"estado": "Paraíba", "registros": 5325},
+    {"estado": "Amapá", "registros": 953},
+    {"estado": "Ceará", "registros": 10149},
+    {"estado": "Minas Gerais", "registros": 23936},
+    {"estado": "Mato Grosso do Sul", "registros": 1956},
+    {"estado": "Goiás", "registros": 5026},
+    {"estado": "Amazonas", "registros": 6181},
+    {"estado": "Rio de Janeiro", "registros": 13204},
+    {"estado": "Rio Grande do Norte", "registros": 4938}
+]
+    },
+    {
+        "id": 3,
+        "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": [
+            {"estado": "São Paulo", "registros": 33863},
+            {"estado": "Minas Gerais", "registros": 23936},
+            {"estado": "Bahia", "registros": 19621},
+            {"estado": "Maranhão", "registros": 13499},
+            {"estado": "Rio de Janeiro", "registros": 13204}
+        ]
+    },
+    {
+        "id": 14,
+        "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
+        "status": "executada",
+        "resultado_qwen": 9998443
+    }
+]

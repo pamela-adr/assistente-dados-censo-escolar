@@ -27,14 +27,13 @@ SQL esperado:
 SELECT COUNT(*) AS quantidade_registros
 FROM read_csv(?, delim=';', encoding='latin-1',
               header=true, all_varchar=true)
-WHERE NO_UF = 'Paraná'
+WHERE SG_UF = 'PR'
 LIMIT 1000
 
 Nesse tipo de pergunta:
-- Não selecione NO_UF.
+- Não selecione SG_UF.
 - Não utilize GROUP BY.
-- Use o nome completo do estado em NO_UF.
-- Não utilize a sigla do estado em NO_UF.
+- Utilize a sigla correspondente do estado em SG_UF.
 - Gere somente SELECT.
 - A cláusula FROM deve conter a função read_csv completa:
   FROM read_csv(?, delim=';', encoding='latin-1',
@@ -43,11 +42,60 @@ Nesse tipo de pergunta:
   ou FROM seguido de um caminho literal.
 - O símbolo ? deve aparecer somente como primeiro argumento
   de read_csv, sem aspas nem crases.
+\- A chamada read_csv deve sempre começar exatamente assim:
+  read_csv(?, delim=';', encoding='latin-1',
+           header=true, all_varchar=true)
+\- Nunca omita a vírgula depois do argumento ?.
+\- Nunca altere os nomes das colunas autorizadas.
+\- Nunca invente nomes de colunas ou substitua letras
+  dos nomes existentes.
 - Não coloque read_csv entre crases.
-- Use somente estas colunas:
+\- Use somente estas colunas:
   NO_UF, SG_UF, NO_MUNICIPIO, CO_MUNICIPIO, CO_ENTIDADE,
-  TP_DEPENDENCIA, QT_MAT_BAS, QT_TUR_BAS, QT_DOC_BAS,
-  TP_SITUACAO_FUNCIONAMENTO.
+  TP_DEPENDENCIA, QT_MAT_BAS, QT_MAT_FUND, QT_MAT_MED,
+  QT_MAT_INF, QT_TUR_BAS, QT_DOC_BAS,
+  TP_SITUACAO_FUNCIONAMENTO, NO_REGIAO, TP_LOCALIZACAO,
+  IN_INTERNET, IN_BIBLIOTECA, IN_QUADRA_ESPORTES,
+  IN_AGUA_REDE_PUBLICA, IN_ENERGIA_REDE_PUBLICA,
+  IN_BANDA_LARGA.
+- ATENÇÃO: o nome correto é QT_MAT_FUND, começando por QT.
+- Nunca escreva TQ_MAT_FUND. Essa coluna não existe.
+- Antes de gerar o SQL, confira se cada nome de coluna
+  está escrito exatamente como na lista autorizada.
+- Os nomes das colunas devem ser copiados exatamente como
+  aparecem na lista autorizada.
+- Para matrículas da educação básica, utilize QT_MAT_BAS.
+- Para matrículas do ensino fundamental, utilize QT_MAT_FUND.
+- Para matrículas do ensino médio, utilize QT_MAT_MED.
+- Para matrículas da educação infantil, utilize QT_MAT_INF.
+- Sempre que a pergunta solicitar a soma ou o total de matrículas,
+  utilize obrigatoriamente SUM() sobre a coluna correspondente.
+- Educação básica: SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)).
+- Ensino fundamental: SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)).
+- Ensino médio: SUM(TRY_CAST(NULLIF(QT_MAT_MED, '') AS BIGINT)).
+- Educação infantil: SUM(TRY_CAST(NULLIF(QT_MAT_INF, '') AS BIGINT)).
+- Nunca retorne os valores individuais da coluna quando a pergunta
+  solicitar a soma total.
+- Não adicione GROUP BY quando a pergunta solicitar o total geral.
+- As colunas QT_MAT_BAS, QT_MAT_FUND, QT_MAT_MED e QT_MAT_INF
+  são lidas como texto. Antes de usar SUM, converta os valores
+  com TRY_CAST(NULLIF(nome_da_coluna, '') AS BIGINT).
+Exemplo obrigatório de soma de matrículas:
+SELECT NO_UF,
+       SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS total_matriculas
+FROM read_csv(?, delim=';', encoding='latin-1',
+              header=true, all_varchar=true)
+GROUP BY NO_UF
+ORDER BY total_matriculas DESC
+LIMIT 5
+
+Sempre use esse padrão de conversão ao somar QT_MAT_FUND.
+- Nunca utilize TQ_MAT_BAS, TQ_MAT_FUND,
+  TQ_MAT_MED ou TQ_MAT_INF.
+\- NO_REGIAO armazena o nome da região geográfica,
+  como 'Norte', 'Nordeste', 'Sudeste', 'Sul' e 'Centro-Oeste'.
+\- TP_LOCALIZACAO identifica a localização da escola:
+  '1' representa urbana e '2' representa rural.
 - NO_UF armazena o nome completo do estado, por exemplo:
   'São Paulo', 'Minas Gerais' e 'Bahia'.
 - SG_UF armazena a sigla da unidade federativa, por exemplo:
@@ -62,13 +110,17 @@ Nesse tipo de pergunta:
 - Nunca utilize NO_UF para contar siglas de estados.
 - Nunca utilize CAST ou TRY_CAST em SG_UF.
 - Quando a pergunta mencionar o nome completo de um estado,
-  utilize exclusivamente NO_UF e o nome completo informado.
-- Quando a pergunta mencionar somente a sigla de um estado,
-  utilize exclusivamente SG_UF e a sigla informada.
+  utilize NO_UF com o nome completo correspondente.
+- Quando a pergunta mencionar a sigla de um estado,
+  utilize SG_UF com a sigla correspondente.
+- Nunca compare o nome completo do estado com SG_UF.
+- Nunca compare a sigla do estado com NO_UF.
+  utilize SG_UF e a sigla informada.
+- Não utilize NO_UF para filtrar estados.
 - Nunca utilize OR para combinar NO_UF e SG_UF em um mesmo filtro.
-- Nunca tente adivinhar ou combinar nome e sigla do estado.
-- Utilize somente uma coluna de estado por consulta:
-  NO_UF ou SG_UF, conforme a forma usada na pergunta.
+- Nunca tente combinar NO_UF e SG_UF em um mesmo filtro.
+- Utilize exclusivamente SG_UF para filtrar estados.
+- Quando receber o nome completo, converta-o para a sigla correspondente.
 - NO_UF e SG_UF são colunas textuais.
 - Nunca utilize TRY_CAST ou CAST nessas duas colunas.
 - Nunca converta nomes ou siglas de estados para números.
@@ -102,10 +154,72 @@ Não converta nomes ou siglas de estados para números.
 - TP_DEPENDENCIA contém os códigos '1', '2', '3' e '4',
   não as letras E, M ou P.
 - Não invente filtros que não foram solicitados.
+\- Em perguntas que solicitam agrupamento por uma categoria,
+  utilize exatamente a coluna dessa categoria no SELECT e GROUP BY.
+- TP_DEPENDENCIA representa a dependência administrativa:
+  '1' = Federal, '2' = Estadual, '3' = Municipal e '4' = Privada.
+- Quando a pergunta solicitar registros por dependência administrativa,
+  utilize COUNT(*) e GROUP BY TP_DEPENDENCIA.
+- Quando a pergunta solicitar registros por localização,
+  utilize COUNT(*) e GROUP BY TP_LOCALIZACAO.
+- Quando a pergunta solicitar registros por região,
+  utilize COUNT(*) e GROUP BY NO_REGIAO.
+- Quando a pergunta solicitar quantas regiões diferentes existem,
+  utilize COUNT(DISTINCT NO_REGIAO).
+- Nesse caso, retorne somente a contagem de regiões distintas.
+- Não utilize GROUP BY nessa consulta.
+- EXEMPLO OBRIGATÓRIO — CONTAGEM DE REGISTROS POR REGIÃO:
+
+Pergunta: Quantos registros existem por região do Brasil?
+
+SQL esperado:
+SELECT NO_REGIAO, COUNT(*) AS quantidade_registros
+FROM read_csv(?, delim=';', encoding='latin-1',
+              header=true, all_varchar=true)
+GROUP BY NO_REGIAO
+LIMIT 1000
+
+- Gere somente uma consulta SQL.
+- Utilize somente um FROM.
+- Nunca acrescente outro FROM depois de LIMIT.
+REGRAS OBRIGATÓRIAS DE FIDELIDADE À PERGUNTA:
+
+- Utilize somente os filtros explicitamente solicitados pelo usuário.
+- Nunca invente condições WHERE.
+- Nunca exclua categorias que não foram solicitadas.
+- Em perguntas sobre as categorias com MAIOR quantidade,
+  agrupe todas as categorias, ordene por quantidade DESC
+  e aplique LIMIT somente ao número solicitado.
+- Em perguntas sobre as categorias com MENOR quantidade,
+  agrupe todas as categorias, ordene por quantidade ASC
+  e aplique LIMIT somente ao número solicitado.
+- Em perguntas que solicitem agrupamento por estado,
+  utilize NO_UF para identificar os estados no resultado.
+- Para filtrar um estado específico, utilize SG_UF
+  com sua sigla correspondente.
+- Não confunda agrupamento por categoria com filtro por categoria.
+- Antes de gerar o SQL, identifique quais filtros foram
+  realmente solicitados na pergunta.
+- Para agrupamentos por categoria, não inclua NO_UF ou SG_UF
+  se a pergunta não solicitar informações por estado.
+\- Não inclua NO_UF ou SG_UF quando a pergunta não solicitar
+  agrupamento ou filtro por estado.
+\- Em perguntas com ordenação, utilize obrigatoriamente:
+  GROUP BY, ORDER BY e LIMIT, nessa ordem.
+\- Nunca coloque LIMIT antes de ORDER BY.
+\- Utilize somente um FROM com read_csv por consulta.
+\- Nunca acrescente outro FROM depois do LIMIT.
 - DIFERENÇA ENTRE REGISTROS E MATRÍCULAS:
 
 - Quando a pergunta solicitar quantidade de registros,
   utilize COUNT(*).
+- Quando a pergunta solicitar somente a quantidade de registros
+  que possuem determinado valor em uma categoria,
+  retorne apenas COUNT(*) no SELECT.
+- Nesse caso, aplique o valor solicitado no WHERE,
+  sem selecionar a coluna da categoria e sem utilizar GROUP BY.
+- Exemplo: para contar registros com TP_DEPENDENCIA igual a 3,
+  utilize WHERE TP_DEPENDENCIA = '3'.
 - Quando a pergunta solicitar a quantidade de registros de um
   único estado, utilize COUNT(*) e filtre pela coluna NO_UF
   ou SG_UF, conforme a pergunta.
@@ -121,10 +235,9 @@ TRY_CAST(NULLIF(coluna, '') AS BIGINT).
 Nunca substitua AS por vírgula.
 - Nunca utilize COUNT(*) para responder perguntas sobre
   o total de matrículas.
-- Se a pergunta mencionar o nome completo de um estado,
-  utilize NO_UF com o nome completo.
-- Não utilize SG_UF quando a pergunta informar o nome
-  completo do estado.
+- Quando a pergunta mencionar o nome completo de um estado,
+  utilize SG_UF com a sigla correspondente.
+- Nunca utilize NO_UF para filtrar estados.
 16. A chamada read_csv deve ser uma função SQL, nunca um nome entre crases.
 17. O primeiro argumento de read_csv deve ser exatamente ? sem aspas.
 18. Não use nomes como file.csv, caminho_do_arquivo ou qualquer caminho literal.
@@ -203,10 +316,10 @@ def gerar_sql_validado(pergunta: str) -> str:
                 "mas o modelo não gerou uma função COUNT."
             )
 
-        if "no_uf" not in sql_normalizado or "group by" not in sql_normalizado:
+        if "sg_uf" not in sql_normalizado or "group by" not in sql_normalizado:
             raise ValueError(
-                "SQL rejeitado: a contagem por estado precisa agrupar por NO_UF."
-            )
+                "SQL rejeitado: a contagem por estado precisa agrupar por SG_UF."
+    )
 
     return sql
 

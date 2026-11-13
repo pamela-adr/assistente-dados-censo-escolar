@@ -68,6 +68,7 @@ def executar_pergunta_qwen(pergunta: dict) -> dict:
     return {
         "id": pergunta["id"],
         "pergunta": pergunta["pergunta"],
+        "sql_gerado": sql,
         "status": "executada",
         "resultado_qwen": resultado_qwen
     }

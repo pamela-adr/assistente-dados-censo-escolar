@@ -1,0 +1,15 @@
+AVALIAÇÃO DO ASSISTENTE TEXT-TO-SQL
+
+Projeto: Assistente de dados educacionais do Brasil
+Modelo utilizado: Qwen 2.5 3B
+Base de dados: Microdados do Censo Escolar 2024
+
+Perguntas avaliadas: 50
+Acertos: 50
+Acurácia: 100,00%
+
+A avaliação comparou os resultados das consultas SQL
+geradas pelo modelo com os resultados das consultas
+SQL de referência.
+
+Data da avaliação: 13/11/2026

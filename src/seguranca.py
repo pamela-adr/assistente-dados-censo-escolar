@@ -12,6 +12,50 @@ COLUNAS_PERMITIDAS = {
     "QT_TUR_BAS",
     "QT_DOC_BAS",
     "TP_SITUACAO_FUNCIONAMENTO",
+
+    # Região e localização
+    "NO_REGIAO",
+    "TP_LOCALIZACAO",
+
+    # Infraestrutura
+    "IN_BIBLIOTECA",
+    "IN_QUADRA_ESPORTES",
+    "IN_BANHEIRO_PNE",
+    "IN_AGUA_REDE_PUBLICA",
+    "IN_ENERGIA_REDE_PUBLICA",
+
+    # Tecnologia
+    "IN_COMPUTADOR",
+    "IN_INTERNET",
+    "IN_INTERNET_ALUNOS",
+    "IN_BANDA_LARGA",
+    "IN_TABLET_ALUNO",
+
+    # Matrículas
+    "QT_MAT_INF",
+    "QT_MAT_FUND",
+    "QT_MAT_MED",
+    "QT_MAT_EJA",
+    "QT_MAT_BAS_FEM",
+    "QT_MAT_BAS_MASC",
+    "QT_MAT_BAS_BRANCA",
+    "QT_MAT_BAS_PRETA",
+    "QT_MAT_BAS_PARDA",
+
+    # Docentes
+    "QT_DOC_INF",
+    "QT_DOC_FUND",
+    "QT_DOC_MED",
+    "IN_PROF_BIBLIOTECARIO",
+
+    # Turmas
+    "QT_TUR_BAS_D",
+    "QT_TUR_BAS_N",
+    "QT_TUR_FUND",
+    "QT_TUR_MED",
+
+    # Acessibilidade
+    "IN_ACESSIBILIDADE_RAMPAS",
 }
 
 def validar_sql(sql: str) -> tuple[bool, str]:
@@ -48,6 +92,9 @@ def validar_sql(sql: str) -> tuple[bool, str]:
     colunas = list(consulta.find_all(exp.Column))
 
     for funcao in consulta.find_all(exp.Func):
+        if isinstance(funcao, (exp.And, exp.Or, exp.Not)):
+            continue
+
         nome_funcao = funcao.sql_name().upper()
 
         if nome_funcao not in {
@@ -61,7 +108,6 @@ def validar_sql(sql: str) -> tuple[bool, str]:
             "NULLIF",
         }:
             return False, f"Função SQL não autorizada: {nome_funcao}"
-
     aliases_permitidos = {
         alias.alias.upper()
         for alias in consulta.find_all(exp.Alias)

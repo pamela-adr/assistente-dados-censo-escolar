@@ -96,5 +96,257 @@
     "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE SG_UF = 'SP' LIMIT 1",
     "tipo": "soma",
     "validacao": "Comparar o total de matrículas de São Paulo com a consulta de referência."
-}
+},
+{
+    "id": 15,
+    "pergunta": "Quantos registros existem por dependência administrativa?",
+    "sql_referencia": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_DEPENDENCIA LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada categoria de dependência administrativa com a consulta de referência."
+},
+{
+    "id": 16,
+    "pergunta": "Quantos registros existem por situação de funcionamento?",
+    "sql_referencia": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_SITUACAO_FUNCIONAMENTO LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada situação de funcionamento com a consulta de referência."
+},
+{
+    "id": 17,
+    "pergunta": "Quantos registros existem por localização urbana ou rural?",
+    "sql_referencia": "SELECT TP_LOCALIZACAO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_LOCALIZACAO LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada categoria de localização com a consulta de referência."
+},
+{
+    "id": 18,
+    "pergunta": "Quantos registros existem por região do Brasil?",
+    "sql_referencia": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada região com a consulta de referência."
+},
+{
+    "id": 19,
+    "pergunta": "Quais são as cinco regiões com mais registros no Censo Escolar?",
+    "sql_referencia": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO ORDER BY quantidade_registros DESC LIMIT 5",
+    "tipo": "ordenação",
+    "validacao": "Comparar as cinco regiões com maiores contagens e sua ordem."
+},
+{
+    "id": 20,
+    "pergunta": "Quais são as cinco regiões com menos registros no Censo Escolar?",
+    "sql_referencia": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO ORDER BY quantidade_registros ASC LIMIT 5",
+    "tipo": "ordenação",
+    "validacao": "Comparar as regiões com menores contagens e sua ordem."
+},
+{
+    "id": 21,
+    "pergunta": "Quantas categorias diferentes de dependência administrativa existem no Censo Escolar?",
+    "sql_referencia": "SELECT COUNT(DISTINCT TP_DEPENDENCIA) AS total_categorias FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de categorias distintas com a consulta de referência."
+},
+{
+    "id": 22,
+    "pergunta": "Quantas categorias diferentes de situação de funcionamento existem no Censo Escolar?",
+    "sql_referencia": "SELECT COUNT(DISTINCT TP_SITUACAO_FUNCIONAMENTO) AS total_categorias FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de categorias distintas com a consulta de referência."
+},
+{
+    "id": 23,
+    "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
+    "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_DEPENDENCIA = '4' LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de registros da categoria 4 com a consulta de referência."
+},
+{
+    "id": 24,
+    "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
+    "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_DEPENDENCIA = '3' LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de registros de categoria 3 com consulta de referência."
+},
+{
+    "id": 25,
+    "pergunta": "Quantos registros possuem a localização igual a 1",
+    "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_LOCALIZACAO = '1' LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de registros da categoria de localização 1 com a consulta de referência."
+},
+{
+    "id": 26,
+    "pergunta": "Quantos registros possuem a situação de funcionamento igual a 1?",
+    "sql_referencia": "SELECT COUNT(*) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_SITUACAO_FUNCIONAMENTO = '1' LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de registros de situação de funcionamento 1 com a consulta de referência."
+},
+{
+    "id": 27,
+    "pergunta": "Quantas regiões diferentes aparecem no Censo Escolar de 2024?",
+    "sql_referencia": "SELECT COUNT(DISTINCT NO_REGIAO) AS total_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de regiões distintas com a consulta de referência."
+},
+{
+    "id": 28,
+    "pergunta": "Quantas categorias diferentes de localização existem no Censo Escolar?",
+    "sql_referencia": "SELECT COUNT(DISTINCT TP_LOCALIZACAO) AS total_categorias FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) LIMIT 1",
+    "tipo": "contagem",
+    "validacao": "Comparar a quantidade de categorias distintas de localização com a consulta de referência."
+},
+{
+    "id": 29,
+    "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
+    "sql_referencia": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE SG_UF = 'SP' GROUP BY TP_DEPENDENCIA LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada categoria de dependência administrativa em São Paulo com a consulta de referência."
+},
+{
+    "id": 30,
+    "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
+    "sql_referencia": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE SG_UF = 'SP' GROUP BY TP_SITUACAO_FUNCIONAMENTO LIMIT 1000",
+    "tipo": "agrupamento",
+    "validacao": "Comparar as contagens de cada situação de funcionamento em São Paulo com a consulta de referência."
+},
+{
+    "id": 31,
+    "pergunta": "Quais são as três dependências administrativas com mais registros?",
+    "sql_referencia": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_DEPENDENCIA ORDER BY quantidade_registros DESC LIMIT 3",
+    "tipo": "ordenação",
+    "validacao": "Comparar as três categorias de dependência administrativa com maiores contagens e sua ordem."
+},
+{
+    "id": 32,
+    "pergunta": "Quais são as duas situações de funcionamento com menos registros?",
+    "sql_referencia": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_SITUACAO_FUNCIONAMENTO ORDER BY quantidade_registros ASC LIMIT 2",
+    "tipo": "ordenação",
+    "validacao": "Comparar as duas situações de funcionamento com menores contagens e sua ordem."
+},
+  {
+    "id": 33,
+    "pergunta": "Quantos registros possuem IN_INTERNET com valor 1?",
+    "sql_referencia": "SELECT COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE IN_INTERNET = '1'",
+    "tipo": "contagem",
+    "validacao": "Contagem de registros com IN_INTERNET igual a 1."
+  },
+  {
+    "id": 34,
+    "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
+    "sql_referencia": "SELECT IN_INTERNET, COUNT(*) AS quantidade FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_INTERNET ORDER BY IN_INTERNET",
+    "tipo": "agrupamento",
+    "validacao": "Agrupamento por valor de IN_INTERNET."
+  },
+  {
+    "id": 35,
+    "pergunta": "Agrupe os registros pelo campo IN_BIBLIOTECA e conte quantos registros existem em cada valor desse campo.",
+    "sql_referencia": "SELECT COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE IN_BIBLIOTECA = '1'",
+    "tipo": "contagem",
+    "validacao": "Contagem de registros com IN_BIBLIOTECA igual a 1."
+  },
+  {
+    "id": 36,
+    "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
+    "sql_referencia": "SELECT IN_BIBLIOTECA, COUNT(*) AS quantidade FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_BIBLIOTECA ORDER BY IN_BIBLIOTECA",
+    "tipo": "agrupamento",
+    "validacao": "Agrupamento por valor de IN_BIBLIOTECA."
+  },
+  {
+    "id": 37,
+    "pergunta": "Quantos registros possuem IN_QUADRA_ESPORTES com valor 1?",
+    "sql_referencia": "SELECT COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE IN_QUADRA_ESPORTES = '1'",
+    "tipo": "contagem",
+    "validacao": "Contagem de registros com IN_QUADRA_ESPORTES igual a 1."
+  },
+  {
+    "id": 38,
+    "pergunta": "Quantos registros possuem IN_AGUA_REDE_PUBLICA com valor 1?",
+    "sql_referencia": "SELECT COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE IN_AGUA_REDE_PUBLICA = '1'",
+    "tipo": "contagem",
+    "validacao": "Contagem de registros com IN_AGUA_REDE_PUBLICA igual a 1."
+  },
+  {
+    "id": 39,
+    "pergunta": "Quantos registros possuem IN_ENERGIA_REDE_PUBLICA com valor 1?",
+    "sql_referencia": "SELECT COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE IN_ENERGIA_REDE_PUBLICA = '1'",
+    "tipo": "contagem",
+    "validacao": "Contagem de registros com IN_ENERGIA_REDE_PUBLICA igual a 1."
+  },
+  {
+    "id": 40,
+    "pergunta": "Qual é a soma de matrículas da educação básica no conjunto de dados?",
+    "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+    "tipo": "soma",
+    "validacao": "Soma dos valores numéricos de QT_MAT_BAS."
+  },
+  {
+    "id": 41,
+    "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
+    "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+    "tipo": "soma",
+    "validacao": "Soma dos valores numéricos de QT_MAT_FUND."
+  },
+  {
+    "id": 42,
+    "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
+    "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_MED, '') AS BIGINT)) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+    "tipo": "soma",
+    "validacao": "Soma dos valores numéricos de QT_MAT_MED."
+  },
+  {
+    "id": 43,
+    "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
+    "sql_referencia": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_INF, '') AS BIGINT)) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+    "tipo": "soma",
+    "validacao": "Soma dos valores numéricos de QT_MAT_INF."
+  },
+  {
+    "id": 44,
+    "pergunta": "Qual é a soma de matrículas da educação básica por dependência administrativa?",
+    "sql_referencia": "SELECT TP_DEPENDENCIA, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_DEPENDENCIA",
+    "tipo": "agrupamento",
+    "validacao": "Soma de matrículas agrupada por TP_DEPENDENCIA."
+  },
+  {
+    "id": 45,
+    "pergunta": "Qual é a soma de matrículas da educação básica por região?",
+    "sql_referencia": "SELECT NO_REGIAO, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO",
+    "tipo": "agrupamento",
+    "validacao": "Soma de matrículas agrupada por NO_REGIAO."
+  },
+  {
+    "id": 46,
+    "pergunta": "Quais são os cinco municípios com mais registros no conjunto de dados?",
+    "sql_referencia": "SELECT NO_MUNICIPIO, COUNT(*) AS quantidade FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_MUNICIPIO ORDER BY quantidade DESC LIMIT 5",
+    "tipo": "ordenação",
+    "validacao": "Cinco municípios com maior quantidade de registros."
+  },
+  {
+    "id": 47,
+    "pergunta": "Qual é a soma dos valores da coluna QT_MAT_BAS para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+    "sql_referencia": "SELECT NO_UF, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY total_matriculas DESC LIMIT 5",
+    "tipo": "ordenação",
+    "validacao": "Cinco estados com maior soma de QT_MAT_BAS."
+  },
+  {
+    "id": 48,
+    "pergunta": "Qual é a soma dos valores da coluna QT_MAT_FUND para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+    "sql_referencia": "SELECT NO_UF, SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY total_matriculas DESC LIMIT 5",
+    "tipo": "ordenação",
+    "validacao": "Cinco estados com maior soma de QT_MAT_FUND."
+  },
+  {
+    "id": 49,
+    "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
+    "sql_referencia": "SELECT TP_LOCALIZACAO, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_LOCALIZACAO",
+    "tipo": "agrupamento",
+    "validacao": "Soma de matrículas agrupada por TP_LOCALIZACAO."
+  },
+  {
+    "id": 50,
+    "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
+    "sql_referencia": "SELECT IN_BANDA_LARGA, COUNT(*) AS quantidade FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_BANDA_LARGA ORDER BY IN_BANDA_LARGA",
+    "tipo": "agrupamento",
+    "validacao": "Agrupamento por valor de IN_BANDA_LARGA."
+  }
 ]

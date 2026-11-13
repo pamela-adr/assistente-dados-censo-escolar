@@ -274,5 +274,527 @@
         "pergunta": "Quantos municípios diferentes aparecem no Censo Escolar de 2024?",
         "status": "executada",
         "resultado_qwen": 5570
+    },
+    {
+        "id": 16,
+        "pergunta": "Quantos registros existem por situação de funcionamento?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "3",
+                "registros": 3159
+            },
+            {
+                "estado": "2",
+                "registros": 31321
+            },
+            {
+                "estado": "1",
+                "registros": 181065
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "pergunta": "Quais são as cinco regiões com mais registros no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "Nordeste",
+                75054
+            ],
+            [
+                "Sudeste",
+                74973
+            ],
+            [
+                "Sul",
+                28704
+            ],
+            [
+                "Norte",
+                25281
+            ],
+            [
+                "Centro-Oeste",
+                11533
+            ]
+        ]
+    },
+    {
+        "id": 17,
+        "pergunta": "Quantos registros existem por localização urbana ou rural?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "1",
+                "registros": 144456
+            },
+            {
+                "estado": "2",
+                "registros": 71089
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "pergunta": "Quais são as cinco regiões com menos registros no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "Centro-Oeste",
+                11533
+            ],
+            [
+                "Norte",
+                25281
+            ],
+            [
+                "Sul",
+                28704
+            ],
+            [
+                "Sudeste",
+                74973
+            ],
+            [
+                "Nordeste",
+                75054
+            ]
+        ]
+    },
+    {
+        "id": 21,
+        "pergunta": "Quantas categorias diferentes de dependência administrativa existem no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": 4
+    },
+    {
+        "id": 22,
+        "pergunta": "Quantas categorias diferentes de situação de funcionamento existem no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": 3
+    },
+    {
+        "id": 15,
+        "pergunta": "Quantos registros existem por dependência administrativa?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "1",
+                "registros": 724
+            },
+            {
+                "estado": "3",
+                "registros": 128999
+            },
+            {
+                "estado": "4",
+                "registros": 52568
+            },
+            {
+                "estado": "2",
+                "registros": 33254
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "pergunta": "Quantos registros existem por região do Brasil?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "Centro-Oeste",
+                "registros": 11533
+            },
+            {
+                "estado": "Sul",
+                "registros": 28704
+            },
+            {
+                "estado": "Sudeste",
+                "registros": 74973
+            },
+            {
+                "estado": "Norte",
+                "registros": 25281
+            },
+            {
+                "estado": "Nordeste",
+                "registros": 75054
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "pergunta": "Quantos registros possuem a localização igual a 1",
+        "status": "executada",
+        "resultado_qwen": 144456
+    },
+    {
+        "id": 26,
+        "pergunta": "Quantos registros possuem a situação de funcionamento igual a 1?",
+        "status": "executada",
+        "resultado_qwen": 181065
+    },
+    {
+        "id": 23,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
+        "status": "executada",
+        "resultado_qwen": 52568
+    },
+    {
+        "id": 27,
+        "pergunta": "Quantas regiões diferentes aparecem no Censo Escolar de 2024?",
+        "status": "executada",
+        "resultado_qwen": 5
+    },
+    {
+        "id": 28,
+        "pergunta": "Quantas categorias diferentes de localização existem no Censo Escolar?",
+        "status": "executada",
+        "resultado_qwen": 2
+    },
+    {
+        "id": 30,
+        "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "1",
+                "registros": 30746
+            },
+            {
+                "estado": "2",
+                "registros": 2611
+            },
+            {
+                "estado": "3",
+                "registros": 506
+            }
+        ]
+    },
+    {
+        "id": 24,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
+        "status": "executada",
+        "resultado_qwen": 128999
+    },
+    {
+        "id": 31,
+        "pergunta": "Quais são as três dependências administrativas com mais registros?",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "3",
+                128999
+            ],
+            [
+                "4",
+                52568
+            ],
+            [
+                "2",
+                33254
+            ]
+        ]
+    },
+    {
+        "id": 32,
+        "pergunta": "Quais são as duas situações de funcionamento com menos registros?",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "3",
+                3159
+            ],
+            [
+                "2",
+                31321
+            ]
+        ]
+    },
+    {
+        "id": 33,
+        "pergunta": "Quantos registros possuem IN_INTERNET com valor 1?",
+        "status": "executada",
+        "resultado_qwen": 166771
+    },
+    {
+        "id": 35,
+        "pergunta": "Quantos registros possuem IN_BIBLIOTECA com valor 1?",
+        "status": "executada",
+        "resultado_qwen": 66569
+    },
+    {
+        "id": 37,
+        "pergunta": "Quantos registros possuem IN_QUADRA_ESPORTES com valor 1?",
+        "status": "executada",
+        "resultado_qwen": 69907
+    },
+    {
+        "id": 38,
+        "pergunta": "Quantos registros possuem IN_AGUA_REDE_PUBLICA com valor 1?",
+        "status": "executada",
+        "resultado_qwen": 140976
+    },
+    {
+        "id": 39,
+        "pergunta": "Quantos registros possuem IN_ENERGIA_REDE_PUBLICA com valor 1?",
+        "status": "executada",
+        "resultado_qwen": 175426
+    },
+    {
+        "id": 40,
+        "pergunta": "Qual é a soma de matrículas da educação básica no conjunto de dados?",
+        "status": "executada",
+        "resultado_qwen": 47088922
+    },
+    {
+        "id": 44,
+        "pergunta": "Qual é a soma de matrículas da educação básica por dependência administrativa?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "2",
+                "registros": 14052850
+            },
+            {
+                "estado": "1",
+                "registros": 383522
+            },
+            {
+                "estado": "3",
+                "registros": 23134718
+            },
+            {
+                "estado": "4",
+                "registros": 9517832
+            }
+        ]
+    },
+    {
+        "id": 45,
+        "pergunta": "Qual é a soma de matrículas da educação básica por região?",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "Sudeste",
+                "registros": 18583214
+            },
+            {
+                "estado": "Nordeste",
+                "registros": 13474803
+            },
+            {
+                "estado": "Sul",
+                "registros": 6495516
+            },
+            {
+                "estado": "Centro-Oeste",
+                "registros": 3757820
+            },
+            {
+                "estado": "Norte",
+                "registros": 4777569
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "pergunta": "Quais são os cinco municípios com mais registros no conjunto de dados?",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "São Paulo",
+                8023
+            ],
+            [
+                "Rio de Janeiro",
+                4203
+            ],
+            [
+                "Belo Horizonte",
+                2146
+            ],
+            [
+                "Salvador",
+                1620
+            ],
+            [
+                "Brasília",
+                1360
+            ]
+        ]
+    },
+    {
+        "id": 49,
+        "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "2",
+                "registros": 5164459
+            },
+            {
+                "estado": "1",
+                "registros": 41924463
+            }
+        ]
+    },
+    {
+        "id": 34,
+        "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "0",
+                "registros": 14294
+            },
+            {
+                "estado": null,
+                "registros": 34480
+            },
+            {
+                "estado": "1",
+                "registros": 166771
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
+        "status": "executada",
+        "resultado_qwen": 7790396
+    },
+    {
+        "id": 50,
+        "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "0",
+                "registros": 21576
+            },
+            {
+                "estado": "1",
+                "registros": 145195
+            },
+            {
+                "estado": null,
+                "registros": 48774
+            }
+        ]
+    },
+    {
+        "id": 47,
+        "pergunta": "Qual é a soma dos valores da coluna QT_MAT_BAS para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "São Paulo",
+                9998443
+            ],
+            [
+                "Minas Gerais",
+                4294157
+            ],
+            [
+                "Rio de Janeiro",
+                3421235
+            ],
+            [
+                "Bahia",
+                3416549
+            ],
+            [
+                "Paraná",
+                2498963
+            ]
+        ]
+    },
+    {
+        "id": 48,
+        "pergunta": "Qual é a soma dos valores da coluna QT_MAT_FUND para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "status": "executada",
+        "resultado_qwen": [
+            [
+                "São Paulo",
+                5329100
+            ],
+            [
+                "Minas Gerais",
+                2328502
+            ],
+            [
+                "Rio de Janeiro",
+                1944295
+            ],
+            [
+                "Bahia",
+                1842350
+            ],
+            [
+                "Paraná",
+                1379419
+            ]
+        ]
+    },
+    {
+        "id": 36,
+        "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "0",
+                "registros": 114496
+            },
+            {
+                "estado": null,
+                "registros": 34480
+            },
+            {
+                "estado": "1",
+                "registros": 66569
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nGROUP BY TP_DEPENDENCIA\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "3",
+                "registros": 13962
+            },
+            {
+                "estado": "4",
+                "registros": 13328
+            },
+            {
+                "estado": "2",
+                "registros": 6526
+            },
+            {
+                "estado": "1",
+                "registros": 47
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS soma_matriculas_fundamental\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
+        "status": "executada",
+        "resultado_qwen": 26002356
+    },
+    {
+        "id": 43,
+        "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_INF, '') AS BIGINT)) AS soma_matriculas_infantil\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
+        "status": "executada",
+        "resultado_qwen": 9491894
     }
 ]

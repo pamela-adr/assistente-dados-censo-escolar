@@ -1,0 +1,352 @@
+[
+    {
+        "id": 1,
+        "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(*) FROM Censo_Escolar_2024",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 2,
+        "pergunta": "Quantos registros existem por estado?",
+        "sql_gerado": "SELECT state, COUNT(*) AS num_registros FROM your_table_name GROUP BY state",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: state"
+    },
+    {
+        "id": 3,
+        "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT estado, COUNT(*) as numero_de_registros\nFROM censo_escolar\nGROUP BY estado\nORDER BY numero_de_registros DESC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: estado"
+    },
+    {
+        "id": 4,
+        "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
+        "sql_gerado": "SELECT COUNT(*) FROM CensoEscolar WHERE estado = 'São Paulo'",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: estado"
+    },
+    {
+        "id": 5,
+        "pergunta": "Quantos registros existem no estado de Minas Gerais?",
+        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE uf = 'MG'",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: uf"
+    },
+    {
+        "id": 6,
+        "pergunta": "Quantos registros possuem o nome do município preenchido?",
+        "sql_gerado": "SELECT COUNT(*) FROM your_table_name WHERE municipio IS NOT NULL",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: municipio"
+    },
+    {
+        "id": 7,
+        "pergunta": "Quantos registros possuem o código da entidade preenchido?",
+        "sql_gerado": "SELECT COUNT(*) FROM tabela_entidade WHERE codigo_entidade IS NOT NULL",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: codigo_entidade"
+    },
+    {
+        "id": 8,
+        "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
+        "sql_gerado": "SELECT estado, COUNT(*) as num_registros\nFROM Censo_Escolar\nGROUP BY estado\nORDER BY num_registros ASC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: estado"
+    },
+    {
+        "id": 9,
+        "pergunta": "Quantos registros existem no estado da Bahia?",
+        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE uf = 'BA'",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: uf"
+    },
+    {
+        "id": 10,
+        "pergunta": "Quantos registros existem no estado do Paraná?",
+        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE nome = 'Paraná'",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: nome"
+    },
+    {
+        "id": 11,
+        "pergunta": "Quais são os dez estados com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT estado, COUNT(*) AS quantidade_registros\nFROM censo_escolar\nGROUP BY estado\nORDER BY quantidade_registros DESC\nLIMIT 10",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: estado"
+    },
+    {
+        "id": 12,
+        "pergunta": "Quantas siglas de estados diferentes existem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT SIGLA_ESTADO) AS NUMERO_DE_SIGLAS FROM Censo_Escolar_2024",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: SIGLA_ESTADO"
+    },
+    {
+        "id": 13,
+        "pergunta": "Quantos municípios diferentes aparecem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT municipio) FROM censoescolares_2024",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: municipio"
+    },
+    {
+        "id": 14,
+        "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
+        "sql_gerado": "SELECT SUM(matriculas) FROM alunos JOIN escolas ON alunos.id_escola = escolas.id WHERE escolas.nome_localidade = 'São Paulo' AND alunos.id_nivel = 1",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: matriculas"
+    },
+    {
+        "id": 15,
+        "pergunta": "Quantos registros existem por dependência administrativa?",
+        "sql_gerado": "SELECT department_name, COUNT(*) FROM employees GROUP BY department_name",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: department_name"
+    },
+    {
+        "id": 16,
+        "pergunta": "Quantos registros existem por situação de funcionamento?",
+        "sql_gerado": "SELECT situação_de_funcionamento, COUNT(*) AS registro_count FROM tabela_de_situação_de_funcionamento GROUP BY situação_de_funcionamento",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+    },
+    {
+        "id": 17,
+        "pergunta": "Quantos registros existem por localização urbana ou rural?",
+        "sql_gerado": "SELECT localizacao, COUNT(*) as registro_count FROM tabela_veiculos GROUP BY localizacao",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: localizacao"
+    },
+    {
+        "id": 18,
+        "pergunta": "Quantos registros existem por região do Brasil?",
+        "sql_gerado": "SELECT REGION, COUNT(*) FROM table_name GROUP BY REGION",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: REGION"
+    },
+    {
+        "id": 19,
+        "pergunta": "Quais são as cinco regiões com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT Region, COUNT(*) as Total_Registros FROM Census_Schools GROUP BY Region ORDER BY Total_Registros DESC LIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: Region"
+    },
+    {
+        "id": 20,
+        "pergunta": "Quais são as cinco regiões com menos registros no Censo Escolar?",
+        "sql_gerado": "SELECT Region, COUNT(*) AS NumberOfRecords\nFROM SchoolCensus\nGROUP BY Region\nORDER BY NumberOfRecords ASC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: Region"
+    },
+    {
+        "id": 21,
+        "pergunta": "Quantas categorias diferentes de dependência administrativa existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT categoria_dependencia_administrativa) AS numero_de_categorias FROM Censo_Escolar",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: categoria_dependencia_administrativa"
+    },
+    {
+        "id": 22,
+        "pergunta": "Quantas categorias diferentes de situação de funcionamento existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT situacao_escolar) AS quantidade_diferentes_situacao_escolar FROM censo_escolar",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: situacao_escolar"
+    },
+    {
+        "id": 23,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
+        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE dependencia_administrativa = 4",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+    },
+    {
+        "id": 24,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
+        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE dependencia_administrativa = 3",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+    },
+    {
+        "id": 25,
+        "pergunta": "Quantos registros possuem a localização igual a 1",
+        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE location = 1",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: location"
+    },
+    {
+        "id": 26,
+        "pergunta": "Quantos registros possuem a situação de funcionamento igual a 1?",
+        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE situação_de_funcionamento = 1",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+    },
+    {
+        "id": 27,
+        "pergunta": "Quantas regiões diferentes aparecem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT regiao) FROM census_2024",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: regiao"
+    },
+    {
+        "id": 28,
+        "pergunta": "Quantas categorias diferentes de localização existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT localizacao) AS categoria_diferentes FROM Censo_Escolar",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: localizacao"
+    },
+    {
+        "id": 29,
+        "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
+        "sql_gerado": "SELECT COUNT(DISTINCT dependentes), estado FROM tabela_dep_adminISTRATIVA WHERE estado = 'SP' GROUP BY estado",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: estado"
+    },
+    {
+        "id": 30,
+        "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
+        "sql_gerado": "SELECT COUNT(*), situação_de_funcionamento FROM sao_paulo GROUP BY situação_de_funcionamento",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+    },
+    {
+        "id": 31,
+        "pergunta": "Quais são as três dependências administrativas com mais registros?",
+        "sql_gerado": "SELECT dependency_name, COUNT(*) AS count\nFROM dependencies_table\nGROUP BY dependency_name\nORDER BY count DESC\nLIMIT 3",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: dependency_name"
+    },
+    {
+        "id": 32,
+        "pergunta": "Quais são as duas situações de funcionamento com menos registros?",
+        "sql_gerado": "SELECT situação_de_funcionamento, COUNT(*) AS registro_count FROM tabela_name GROUP BY situação_de_funcionamento ORDER BY registro_count ASC LIMIT 2",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+    },
+    {
+        "id": 33,
+        "pergunta": "Quantos registros possuem IN_INTERNET com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE IN_INTERNET = 1",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 34,
+        "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_INTERNET, COUNT(*) FROM your_table_name GROUP BY IN_INTERNET",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 35,
+        "pergunta": "Agrupe os registros pelo campo IN_BIBLIOTECA e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_BIBLIOTECA, COUNT(*) FROM YOUR_TABLE_NAME GROUP BY IN_BIBLIOTECA",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 36,
+        "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
+        "sql_gerado": "SELECT IN_BIBLIOTECA, COUNT(*) FROM your_table_name GROUP BY IN_BIBLIOTECA",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 37,
+        "pergunta": "Quantos registros possuem IN_QUADRA_ESPORTES com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) FROM tabela_name WHERE IN_QUADRA_ESPORTES = 1",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 38,
+        "pergunta": "Quantos registros possuem IN_AGUA_REDE_PUBLICA com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) FROM your_table_name WHERE IN_AGUA_REDE_PUBLICA = 1",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 39,
+        "pergunta": "Quantos registros possuem IN_ENERGIA_REDE_PUBLICA com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) FROM tabela_name WHERE IN_ENERGIA_REDE_PUBLICA = 1",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 40,
+        "pergunta": "Qual é a soma de matrículas da educação básica no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(matriculas) FROM dados_educacao_basica",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: matriculas"
+    },
+    {
+        "id": 41,
+        "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(matriculas) FROM dados WHERE nivel_educacional = 'Ensino Fundamental'",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: matriculas"
+    },
+    {
+        "id": 42,
+        "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
+        "sql_gerado": "SELECT SUM(QT_MAT_MED) FROM your_table_name_HERE",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 43,
+        "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(matriculas) FROM dados_educacao_infantil",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: matriculas"
+    },
+    {
+        "id": 44,
+        "pergunta": "Qual é a soma de matrículas da educação básica por dependência administrativa?",
+        "sql_gerado": "SELECT dependencia_administrativa, SUM(matriculas) FROM edicao GROUP BY dependencia_administrativa",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+    },
+    {
+        "id": 45,
+        "pergunta": "Qual é a soma de matrículas da educação básica por região?",
+        "sql_gerado": "SELECT region, SUM(matriculas) FROM educacao_basica GROUP BY region",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: region"
+    },
+    {
+        "id": 46,
+        "pergunta": "Quais são os cinco municípios com mais registros no conjunto de dados?",
+        "sql_gerado": "SELECT Municipio, COUNT(*) AS TotalDeRegistros\nFROM nome_tabela\nGROUP BY Municipio\nORDER BY TotalDeRegistros DESC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Coluna SQL não autorizada: Municipio"
+    },
+    {
+        "id": 47,
+        "pergunta": "Qual é a soma dos valores da coluna QT_MAT_BAS para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_BAS) AS TotalQT_MAT_BAS\nFROM your_table_name\nGROUP BY NO_UF\nORDER BY TotalQT_MAT_BAS DESC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 48,
+        "pergunta": "Qual é a soma dos valores da coluna QT_MAT_FUND para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_FUND) AS TotalQT_MAT_FUND\nFROM your_table_name\nGROUP BY NO_UF\nORDER BY TotalQT_MAT_FUND DESC\nLIMIT 5",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 49,
+        "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
+        "sql_gerado": "SELECT TP_LOCALIZACAO, SUM(QT_MAT_BAS) FROM tabela_name GROUP BY TP_LOCALIZACAO",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    },
+    {
+        "id": 50,
+        "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_BANDA_LARGA, COUNT(*) FROM tabela_name GROUP BY IN_BANDA_LARGA",
+        "status": "bloqueada",
+        "motivo": "Apenas a fonte de dados autorizada é permitida."
+    }
+]

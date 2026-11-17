@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
+        "sql": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona o total de linhas de um arquivo CSV lido usando a função `read_csv`. Ela contabiliza todas as linhas (`COUNT(*)`) que atendem aos parâmetros especificados, como delimitador de campo (`delim`), codificação de caracteres (`encoding`), presença de cabeçalos (`header`) e tratamento de campos como VARCHAR (`all_varchar`). A função retorna um resultado com uma coluna chamada `quantidade_registros` que contém o número total de linhas. Em seguida, a consulta `LIMIT 1000` limita o número de linhas retornadas a 1000."
+    },
+    {
+        "id": 2,
+        "pergunta": "Quantos registros existem por estado?",
+        "sql": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona o nome dos estados (NO_UF) e conta o número de registros associados a cada estado, agrupando por estado. Ela limita o resultado a 1000 registros. A contagem é feita usando COUNT(*). A consulta não aplica filtros, ordenações ou ordena os resultados."
+    },
+    {
+        "id": 3,
+        "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
+        "sql": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY quantidade_registros DESC\nLIMIT 5",
+        "explicacao": "Essa consulta SQL faz o seguinte:\n\n- Seleciona o campo `NO_UF` e conta o número total de registros de acordo com cada `NO_UF`, atribuindo esse número à `quantidade_registros`.\n- Agrupa os resultados por `NO_UF`.\n- Ordena os resultados de forma decrescente pela `quantidade_registros`.\n- Limita o resultado a 5 registros.\n\nA consulta lê dados de um arquivo CSV utilizando a função `read_csv`, especificando que o separador de campos é ';', o caractere de codificação é 'latin-1', que o cabeçalho do arquivo está disponível (header=true) e que todos os campos devem ser interpretados como caracteres variáveis (all_varchar=true)."
+    },
+    {
+        "id": 4,
+        "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
+        "sql": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona o número de linhas em um arquivo CSV lido, utilizando a função `read_csv`. Ela especifica que o separador de campos é a vírgula (;), o encodamento é latin-1, há cabeçalos de colunas e todos os campos são de tipo de dados VARCHAR. A consulta filtra esses dados para linhas onde o campo `SG_UF` (representando a sigla do estado) é 'SP'. Em seguida, ela limita o número de linhas retornadas a 1000. Por fim, ela conta o número de linhas que atendem aos filtros, sem fornecer detalhes adicionais sobre os dados."
+    },
+    {
+        "id": 5,
+        "pergunta": "Quantos registros existem no estado de Minas Gerais?",
+        "sql": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE SG_UF = 'MG'\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona todas as linhas de um arquivo CSV lido através da função `read_csv`, onde o separador é a vírgula (`,`) e a codificação é `'latin-1'`. Ela só lida as linhas com uma coluna de cabeçalho definida (`header=true`). As colunas da tabela resultante são de tipo varchar. \n\nA consulta aplica um filtro onde a coluna `SG_UF` é igual a `'MG'`, o que filtra apenas as linhas que representam o estado de Minas Gerais. \n\nO operador `COUNT(*)` é usado para contar o número total de linhas que atendem aos critérios de filtro. A função retorna apenas um número, não todas as linhas.\n\nPor fim, a cláusula `LIMIT 1000` limita o número de linhas retornadas ao arquivo CSV à 1000."
+    },
+    {
+        "id": 6,
+        "pergunta": "Quantos registros possuem o nome do município preenchido?",
+        "sql": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE NO_MUNICIPIO IS NOT NULL\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona o total de linhas (registros) em um arquivo CSV lido usando a função `read_csv`. Os registros são separados por ';' e o encoding é 'latin-1'. O arquivo tem cabeçalos de colunas e todas as colunas são tratadas como strings (varchar). A consulta aplica um filtro para selecionar apenas as linhas onde `NO_MUNICIPIO` não é NULL. Finalmente, ela limita o resultado a 1000 linhas. A consulta retorna um único valor, que é a contagem dessas linhas filtradas. O alias `quantidade_registros` é usado para nomear este valor de contagem."
+    },
+    {
+        "id": 7,
+        "pergunta": "Quantos registros possuem o código da entidade preenchido?",
+        "sql": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE CO_ENTIDADE IS NOT NULL\nLIMIT 1000",
+        "explicacao": "Esta consulta SQL seleciona e conta todos os registros de uma tabela de dados importada a partir de um arquivo CSV. \n\nA consulta faz o seguinte:\n- Lê dados de um arquivo CSV, onde as linhas são separadas por um delimitador (;) e as colunas são do tipo varchar, usando a codificação 'latin-1'.\n- Define o cabeçalho do CSV (header=true) e trata todas as colunas como varchar (all_varchar=true).\n- Filtra os registros onde a coluna CO_ENTIDADE não é nula.\n- Limita a contagem de registros para no máximo 1000.\n- Usa COUNT(*) para contar quantos registros atendem aos filtros.\n- Nomeia a contagem como \"quantidade_registros\"."
+    },
+    {
+        "id": 8,
+        "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
+        "sql": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY quantidade_registros ASC\nLIMIT 5",
+        "explicacao": "A consulta SQL seleciona o nome do estado (NO_UF) e conta quantas vezes cada estado aparece na tabela CSV lida (usando o parâmetro ? para a linha de comando que executa a consulta). Ela contabiliza todas as linhas que atendem aos filtros definidos no CSV (usando todos os campos como VARCHAR devido à opção all_varchar=true). Depois, agrupa os resultados por estado, o que significa que todas as ocorrências de cada estado serão contadas juntas. A contagem de registros para cada estado é chamada de \"quantidade_registros\". Finalmente, os resultados são ordenados por essa contagem em ordem crescente e apenas os 5 primeiros são retornados."
+    },
+    {
+        "id": 9,
+        "pergunta": "Quantos registros existem no estado da Bahia?",
+        "sql": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nWHERE SG_UF = 'BA'\nLIMIT 1000",
+        "explicacao": "A consulta SQL seleciona o número de linhas que atendem aos critérios de filtragem especificados. Ela define uma operação de leitura de um arquivo CSV usando funções de manipulação de dados, e aplica um filtro para linhas onde o campo SG_UF tem o valor 'BA'. Depois disso, limita o número de resultados retornados para 1000. Finalmente, utiliza a função COUNT(*) para contar todas as linhas que atendem aos filtros, sem importar o conteúdo de outras colunas."
+    },
+    {
+        "id": 10,
+        "pergunta": "Quantos registros existem no estado do Paraná?",
+        "sql": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE SG_UF = 'PR'\nLIMIT 1000",
+        "explicacao": "A consulta SQL seleciona a contagem de todas as linhas que atendem aos filtros, onde o valor da coluna SG_UF é igual a 'PR'. Ela carrega dados de um arquivo CSV usando a função `read_csv`, especificando o separador de colunas como ';', o código de encoding como 'latin-1', e que o cabeçalho do arquivo seja o segundo registro. A função `COUNT(*)` é usada para contar todas as linhas que atendem ao filtro. Finalmente, `LIMIT 1000` limita a quantidade de linhas retornadas para não mais do que 1000."
+    }
+]

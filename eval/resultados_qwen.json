@@ -2,49 +2,63 @@
     {
         "id": 1,
         "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 215545
     },
     {
         "id": 2,
-        "pergunta": "Quantos registros existem em cada estado?",
+        "pergunta": "Quantos registros existem por estado?",
+        "sql_gerado": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
             {
-                "estado": "Piauí",
-                "registros": 5632
+                "estado": "Sergipe",
+                "registros": 2489
+            },
+            {
+                "estado": "Alagoas",
+                "registros": 3465
+            },
+            {
+                "estado": "São Paulo",
+                "registros": 33863
             },
             {
                 "estado": "Maranhão",
                 "registros": 13499
             },
             {
-                "estado": "Mato Grosso",
-                "registros": 3191
+                "estado": "Piauí",
+                "registros": 5632
             },
             {
-                "estado": "Rio Grande do Sul",
-                "registros": 11262
+                "estado": "Acre",
+                "registros": 1659
             },
             {
-                "estado": "Espírito Santo",
-                "registros": 3970
-            },
-            {
-                "estado": "Santa Catarina",
-                "registros": 7420
-            },
-            {
-                "estado": "Rondônia",
-                "registros": 1424
+                "estado": "Pará",
+                "registros": 11848
             },
             {
                 "estado": "Paraná",
                 "registros": 10022
             },
             {
-                "estado": "Pará",
-                "registros": 11848
+                "estado": "Rondônia",
+                "registros": 1424
+            },
+            {
+                "estado": "Pernambuco",
+                "registros": 9936
+            },
+            {
+                "estado": "Mato Grosso",
+                "registros": 3191
+            },
+            {
+                "estado": "Roraima",
+                "registros": 958
             },
             {
                 "estado": "Bahia",
@@ -59,30 +73,6 @@
                 "registros": 1360
             },
             {
-                "estado": "Acre",
-                "registros": 1659
-            },
-            {
-                "estado": "Pernambuco",
-                "registros": 9936
-            },
-            {
-                "estado": "Alagoas",
-                "registros": 3465
-            },
-            {
-                "estado": "Sergipe",
-                "registros": 2489
-            },
-            {
-                "estado": "São Paulo",
-                "registros": 33863
-            },
-            {
-                "estado": "Roraima",
-                "registros": 958
-            },
-            {
                 "estado": "Paraíba",
                 "registros": 5325
             },
@@ -91,16 +81,16 @@
                 "registros": 953
             },
             {
-                "estado": "Ceará",
-                "registros": 10149
+                "estado": "Espírito Santo",
+                "registros": 3970
             },
             {
-                "estado": "Minas Gerais",
-                "registros": 23936
+                "estado": "Rio Grande do Sul",
+                "registros": 11262
             },
             {
-                "estado": "Mato Grosso do Sul",
-                "registros": 1956
+                "estado": "Santa Catarina",
+                "registros": 7420
             },
             {
                 "estado": "Goiás",
@@ -111,75 +101,87 @@
                 "registros": 6181
             },
             {
-                "estado": "Rio de Janeiro",
-                "registros": 13204
+                "estado": "Minas Gerais",
+                "registros": 23936
+            },
+            {
+                "estado": "Ceará",
+                "registros": 10149
+            },
+            {
+                "estado": "Mato Grosso do Sul",
+                "registros": 1956
             },
             {
                 "estado": "Rio Grande do Norte",
                 "registros": 4938
+            },
+            {
+                "estado": "Rio de Janeiro",
+                "registros": 13204
             }
         ]
     },
     {
         "id": 3,
         "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY quantidade_registros DESC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
-            {
-                "estado": "São Paulo",
-                "registros": 33863
-            },
-            {
-                "estado": "Minas Gerais",
-                "registros": 23936
-            },
-            {
-                "estado": "Bahia",
-                "registros": 19621
-            },
-            {
-                "estado": "Maranhão",
-                "registros": 13499
-            },
-            {
-                "estado": "Rio de Janeiro",
-                "registros": 13204
-            }
+            [
+                "São Paulo",
+                33863
+            ],
+            [
+                "Minas Gerais",
+                23936
+            ],
+            [
+                "Bahia",
+                19621
+            ],
+            [
+                "Maranhão",
+                13499
+            ],
+            [
+                "Rio de Janeiro",
+                13204
+            ]
         ]
-    },
-    {
-        "id": 14,
-        "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
-        "status": "executada",
-        "resultado_qwen": 9998443
     },
     {
         "id": 4,
         "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
+        "sql_gerado": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 33863
     },
     {
         "id": 5,
         "pergunta": "Quantos registros existem no estado de Minas Gerais?",
+        "sql_gerado": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE SG_UF = 'MG' LIMIT 1000",
         "status": "executada",
         "resultado_qwen": 23936
     },
     {
         "id": 6,
         "pergunta": "Quantos registros possuem o nome do município preenchido?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE NO_MUNICIPIO IS NOT NULL\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 215545
     },
     {
         "id": 7,
-        "pergunta": "Quantos registros possuem código de entidade preenchido?",
+        "pergunta": "Quantos registros possuem o código da entidade preenchido?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE CO_ENTIDADE IS NOT NULL\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 215545
     },
     {
         "id": 8,
         "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
+        "sql_gerado": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY quantidade_registros ASC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -207,18 +209,21 @@
     {
         "id": 9,
         "pergunta": "Quantos registros existem no estado da Bahia?",
+        "sql_gerado": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nWHERE SG_UF = 'BA' LIMIT 1000",
         "status": "executada",
         "resultado_qwen": 19621
     },
     {
         "id": 10,
-        "pergunta": "Quantos registros existem no estado do Paraná:",
+        "pergunta": "Quantos registros existem no estado do Paraná?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE SG_UF = 'PR'\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 10022
     },
     {
         "id": 11,
         "pergunta": "Quais são os dez estados com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT NO_UF, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY quantidade_registros DESC\nLIMIT 10",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -265,21 +270,59 @@
     },
     {
         "id": 12,
-        "pergunta": "Quantas siglas de estados diferentes existem no Censo Escolar de 2024",
+        "pergunta": "Quantas siglas de estados diferentes existem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT SG_UF) AS quantidade_estados_diferentes\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
         "status": "executada",
         "resultado_qwen": 27
     },
     {
         "id": 13,
         "pergunta": "Quantos municípios diferentes aparecem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT CO_MUNICIPIO) AS quantidade_municipios\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 5570
     },
     {
-        "id": 16,
-        "pergunta": "Quantos registros existem por situação de funcionamento?",
+        "id": 14,
+        "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
+        "sql_gerado": "SELECT SG_UF, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nGROUP BY SG_UF\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": "SP"
+    },
+    {
+        "id": 15,
+        "pergunta": "Quantos registros existem por dependência administrativa?",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY TP_DEPENDENCIA\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
+            {
+                "estado": "2",
+                "registros": 33254
+            },
+            {
+                "estado": "1",
+                "registros": 724
+            },
+            {
+                "estado": "3",
+                "registros": 128999
+            },
+            {
+                "estado": "4",
+                "registros": 52568
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "pergunta": "Quantos registros existem por situação de funcionamento?",
+        "sql_gerado": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY TP_SITUACAO_FUNCIONAMENTO\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "1",
+                "registros": 181065
+            },
             {
                 "estado": "3",
                 "registros": 3159
@@ -287,16 +330,57 @@
             {
                 "estado": "2",
                 "registros": 31321
-            },
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "pergunta": "Quantos registros existem por localização urbana ou rural?",
+        "sql_gerado": "SELECT TP_LOCALIZACAO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY TP_LOCALIZACAO\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
             {
                 "estado": "1",
-                "registros": 181065
+                "registros": 144456
+            },
+            {
+                "estado": "2",
+                "registros": 71089
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "pergunta": "Quantos registros existem por região do Brasil?",
+        "sql_gerado": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_REGIAO\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "Centro-Oeste",
+                "registros": 11533
+            },
+            {
+                "estado": "Sul",
+                "registros": 28704
+            },
+            {
+                "estado": "Norte",
+                "registros": 25281
+            },
+            {
+                "estado": "Nordeste",
+                "registros": 75054
+            },
+            {
+                "estado": "Sudeste",
+                "registros": 74973
             }
         ]
     },
     {
         "id": 19,
         "pergunta": "Quais são as cinco regiões com mais registros no Censo Escolar?",
+        "sql_gerado": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_REGIAO\nORDER BY quantidade_registros DESC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -322,23 +406,9 @@
         ]
     },
     {
-        "id": 17,
-        "pergunta": "Quantos registros existem por localização urbana ou rural?",
-        "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "1",
-                "registros": 144456
-            },
-            {
-                "estado": "2",
-                "registros": 71089
-            }
-        ]
-    },
-    {
         "id": 20,
         "pergunta": "Quais são as cinco regiões com menos registros no Censo Escolar?",
+        "sql_gerado": "SELECT NO_REGIAO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_REGIAO\nORDER BY quantidade_registros ASC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -366,107 +436,96 @@
     {
         "id": 21,
         "pergunta": "Quantas categorias diferentes de dependência administrativa existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT TP_DEPENDENCIA) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 4
     },
     {
         "id": 22,
         "pergunta": "Quantas categorias diferentes de situação de funcionamento existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT TP_SITUACAO_FUNCIONAMENTO) AS quantidade_diferentes\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 3
     },
     {
-        "id": 15,
-        "pergunta": "Quantos registros existem por dependência administrativa?",
+        "id": 23,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE TP_DEPENDENCIA = '4'\nLIMIT 1000",
         "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "1",
-                "registros": 724
-            },
-            {
-                "estado": "3",
-                "registros": 128999
-            },
-            {
-                "estado": "4",
-                "registros": 52568
-            },
-            {
-                "estado": "2",
-                "registros": 33254
-            }
-        ]
+        "resultado_qwen": 52568
     },
     {
-        "id": 18,
-        "pergunta": "Quantos registros existem por região do Brasil?",
+        "id": 24,
+        "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE TP_DEPENDENCIA = '3'",
         "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "Centro-Oeste",
-                "registros": 11533
-            },
-            {
-                "estado": "Sul",
-                "registros": 28704
-            },
-            {
-                "estado": "Sudeste",
-                "registros": 74973
-            },
-            {
-                "estado": "Norte",
-                "registros": 25281
-            },
-            {
-                "estado": "Nordeste",
-                "registros": 75054
-            }
-        ]
+        "resultado_qwen": 128999
     },
     {
         "id": 25,
         "pergunta": "Quantos registros possuem a localização igual a 1",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE TP_LOCALIZACAO = '1'\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 144456
     },
     {
         "id": 26,
         "pergunta": "Quantos registros possuem a situação de funcionamento igual a 1?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nWHERE TP_SITUACAO_FUNCIONAMENTO = '1'\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 181065
     },
     {
-        "id": 23,
-        "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
-        "status": "executada",
-        "resultado_qwen": 52568
-    },
-    {
         "id": 27,
         "pergunta": "Quantas regiões diferentes aparecem no Censo Escolar de 2024?",
+        "sql_gerado": "SELECT COUNT(DISTINCT NO_REGIAO) AS quantidade_regioes\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
         "status": "executada",
         "resultado_qwen": 5
     },
     {
         "id": 28,
         "pergunta": "Quantas categorias diferentes de localização existem no Censo Escolar?",
+        "sql_gerado": "SELECT COUNT(DISTINCT TP_LOCALIZACAO) AS quantidade_regiões_diferentes\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
         "status": "executada",
         "resultado_qwen": 2
     },
     {
-        "id": 30,
-        "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
+        "id": 29,
+        "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nGROUP BY TP_DEPENDENCIA\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
             {
-                "estado": "1",
-                "registros": 30746
+                "estado": "3",
+                "registros": 13962
+            },
+            {
+                "estado": "4",
+                "registros": 13328
             },
             {
                 "estado": "2",
+                "registros": 6526
+            },
+            {
+                "estado": "1",
+                "registros": 47
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
+        "sql_gerado": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nGROUP BY TP_SITUACAO_FUNCIONAMENTO\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "2",
                 "registros": 2611
+            },
+            {
+                "estado": "1",
+                "registros": 30746
             },
             {
                 "estado": "3",
@@ -475,109 +534,166 @@
         ]
     },
     {
-        "id": 24,
-        "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
-        "status": "executada",
-        "resultado_qwen": 128999
-    },
-    {
-        "id": 31,
-        "pergunta": "Quais são as três dependências administrativas com mais registros?",
-        "status": "executada",
-        "resultado_qwen": [
-            [
-                "3",
-                128999
-            ],
-            [
-                "4",
-                52568
-            ],
-            [
-                "2",
-                33254
-            ]
-        ]
-    },
-    {
         "id": 32,
         "pergunta": "Quais são as duas situações de funcionamento com menos registros?",
+        "sql_gerado": "SELECT NO_UF, TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE TP_SITUACAO_FUNCIONAMENTO IN ('1', '2')\nGROUP BY NO_UF, TP_SITUACAO_FUNCIONAMENTO\nORDER BY quantidade_registros ASC\nLIMIT 2",
         "status": "executada",
         "resultado_qwen": [
             [
-                "3",
-                3159
+                "Distrito Federal",
+                "2"
             ],
             [
-                "2",
-                31321
+                "Roraima",
+                "2"
             ]
         ]
     },
     {
         "id": 33,
         "pergunta": "Quantos registros possuem IN_INTERNET com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE IN_INTERNET = '1'\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 166771
     },
     {
-        "id": 35,
-        "pergunta": "Quantos registros possuem IN_BIBLIOTECA com valor 1?",
+        "id": 34,
+        "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_INTERNET, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY IN_INTERNET\nLIMIT 1000",
         "status": "executada",
-        "resultado_qwen": 66569
+        "resultado_qwen": [
+            {
+                "estado": "0",
+                "registros": 14294
+            },
+            {
+                "estado": null,
+                "registros": 34480
+            },
+            {
+                "estado": "1",
+                "registros": 166771
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "pergunta": "Agrupe os registros pelo campo IN_BIBLIOTECA e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_BIBLIOTECA AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY IN_BIBLIOTECA\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": null
+    },
+    {
+        "id": 36,
+        "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
+        "sql_gerado": "SELECT DISTINCT IN_BIBLIOTECA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY IN_BIBLIOTECA\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": [
+            {
+                "estado": "1",
+                "registros": 66569
+            },
+            {
+                "estado": "0",
+                "registros": 114496
+            },
+            {
+                "estado": null,
+                "registros": 34480
+            }
+        ]
     },
     {
         "id": 37,
         "pergunta": "Quantos registros possuem IN_QUADRA_ESPORTES com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE IN_QUADRA_ESPORTES = '1'",
         "status": "executada",
         "resultado_qwen": 69907
     },
     {
         "id": 38,
         "pergunta": "Quantos registros possuem IN_AGUA_REDE_PUBLICA com valor 1?",
+        "sql_gerado": "SELECT COUNT(*)\nFROM read_csv(?, delim=';', encoding='latin-1',\n               header=true, all_varchar=true)\nWHERE IN_AGUA_REDE_PUBLICA = '1'",
         "status": "executada",
         "resultado_qwen": 140976
     },
     {
         "id": 39,
         "pergunta": "Quantos registros possuem IN_ENERGIA_REDE_PUBLICA com valor 1?",
+        "sql_gerado": "SELECT COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nWHERE IN_ENERGIA_REDE_PUBLICA = '1' LIMIT 1000",
         "status": "executada",
         "resultado_qwen": 175426
     },
     {
         "id": 40,
         "pergunta": "Qual é a soma de matrículas da educação básica no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas_eb\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": 47088922
     },
     {
+        "id": 41,
+        "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS total_matriculas_fundamental\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
+        "status": "executada",
+        "resultado_qwen": 26002356
+    },
+    {
+        "id": 42,
+        "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_MED, '') AS BIGINT)) AS total_matriculas_med\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nLIMIT 1000",
+        "status": "executada",
+        "resultado_qwen": 7790396
+    },
+    {
+        "id": 43,
+        "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
+        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_INF, '') AS BIGINT)) AS soma_matriculas_infantil\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+        "status": "executada",
+        "resultado_qwen": 9491894
+    },
+    {
         "id": 44,
         "pergunta": "Qual é a soma de matrículas da educação básica por dependência administrativa?",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY TP_DEPENDENCIA\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
             {
-                "estado": "2",
-                "registros": 14052850
-            },
-            {
                 "estado": "1",
                 "registros": 383522
+            },
+            {
+                "estado": "4",
+                "registros": 9517832
             },
             {
                 "estado": "3",
                 "registros": 23134718
             },
             {
-                "estado": "4",
-                "registros": 9517832
+                "estado": "2",
+                "registros": 14052850
             }
         ]
     },
     {
         "id": 45,
         "pergunta": "Qual é a soma de matrículas da educação básica por região?",
+        "sql_gerado": "SELECT NO_REGIAO, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY NO_REGIAO\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
+            {
+                "estado": "Centro-Oeste",
+                "registros": 3757820
+            },
+            {
+                "estado": "Sul",
+                "registros": 6495516
+            },
+            {
+                "estado": "Norte",
+                "registros": 4777569
+            },
             {
                 "estado": "Sudeste",
                 "registros": 18583214
@@ -585,24 +701,13 @@
             {
                 "estado": "Nordeste",
                 "registros": 13474803
-            },
-            {
-                "estado": "Sul",
-                "registros": 6495516
-            },
-            {
-                "estado": "Centro-Oeste",
-                "registros": 3757820
-            },
-            {
-                "estado": "Norte",
-                "registros": 4777569
             }
         ]
     },
     {
         "id": 46,
         "pergunta": "Quais são os cinco municípios com mais registros no conjunto de dados?",
+        "sql_gerado": "SELECT NO_MUNICIPIO, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY NO_MUNICIPIO\nORDER BY quantidade_registros DESC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -628,67 +733,9 @@
         ]
     },
     {
-        "id": 49,
-        "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
-        "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "2",
-                "registros": 5164459
-            },
-            {
-                "estado": "1",
-                "registros": 41924463
-            }
-        ]
-    },
-    {
-        "id": 34,
-        "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
-        "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "0",
-                "registros": 14294
-            },
-            {
-                "estado": null,
-                "registros": 34480
-            },
-            {
-                "estado": "1",
-                "registros": 166771
-            }
-        ]
-    },
-    {
-        "id": 42,
-        "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
-        "status": "executada",
-        "resultado_qwen": 7790396
-    },
-    {
-        "id": 50,
-        "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
-        "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "0",
-                "registros": 21576
-            },
-            {
-                "estado": "1",
-                "registros": 145195
-            },
-            {
-                "estado": null,
-                "registros": 48774
-            }
-        ]
-    },
-    {
         "id": 47,
         "pergunta": "Qual é a soma dos valores da coluna QT_MAT_BAS para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "sql_gerado": "SELECT NO_UF, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS total_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY total_matriculas DESC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -716,6 +763,7 @@
     {
         "id": 48,
         "pergunta": "Qual é a soma dos valores da coluna QT_MAT_FUND para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
+        "sql_gerado": "SELECT NO_UF,\n       SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS total_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY NO_UF\nORDER BY total_matriculas DESC\nLIMIT 5",
         "status": "executada",
         "resultado_qwen": [
             [
@@ -741,60 +789,59 @@
         ]
     },
     {
-        "id": 36,
-        "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
+        "id": 49,
+        "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
+        "sql_gerado": "SELECT TP_LOCALIZACAO, SUM(TRY_CAST(NULLIF(QT_MAT_BAS, '') AS BIGINT)) AS soma_matriculas\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nGROUP BY TP_LOCALIZACAO\nLIMIT 1000",
         "status": "executada",
         "resultado_qwen": [
-            {
-                "estado": "0",
-                "registros": 114496
-            },
-            {
-                "estado": null,
-                "registros": 34480
-            },
-            {
-                "estado": "1",
-                "registros": 66569
-            }
-        ]
-    },
-    {
-        "id": 29,
-        "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
-        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)\nWHERE SG_UF = 'SP'\nGROUP BY TP_DEPENDENCIA\nLIMIT 1000",
-        "status": "executada",
-        "resultado_qwen": [
-            {
-                "estado": "3",
-                "registros": 13962
-            },
-            {
-                "estado": "4",
-                "registros": 13328
-            },
             {
                 "estado": "2",
-                "registros": 6526
+                "registros": 5164459
             },
             {
                 "estado": "1",
-                "registros": 47
+                "registros": 41924463
             }
         ]
     },
     {
-        "id": 41,
-        "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
-        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_FUND, '') AS BIGINT)) AS soma_matriculas_fundamental\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
+        "id": 50,
+        "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
+        "sql_gerado": "SELECT IN_BANDA_LARGA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY IN_BANDA_LARGA\nLIMIT 1000",
         "status": "executada",
-        "resultado_qwen": 26002356
+        "resultado_qwen": [
+            {
+                "estado": null,
+                "registros": 48774
+            },
+            {
+                "estado": "0",
+                "registros": 21576
+            },
+            {
+                "estado": "1",
+                "registros": 145195
+            }
+        ]
     },
     {
-        "id": 43,
-        "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
-        "sql_gerado": "SELECT SUM(TRY_CAST(NULLIF(QT_MAT_INF, '') AS BIGINT)) AS soma_matriculas_infantil\nFROM read_csv(?, delim=';', encoding='latin-1',\n              header=true, all_varchar=true)",
+        "id": 31,
+        "pergunta": "Quais são as três dependências administrativas com mais registros?",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS quantidade_registros\nFROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)\nGROUP BY TP_DEPENDENCIA\nORDER BY quantidade_registros DESC\nLIMIT 3",
         "status": "executada",
-        "resultado_qwen": 9491894
+        "resultado_qwen": [
+            [
+                "3",
+                128999
+            ],
+            [
+                "4",
+                52568
+            ],
+            [
+                "2",
+                33254
+            ]
+        ]
     }
 ]

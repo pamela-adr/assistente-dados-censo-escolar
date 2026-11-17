@@ -281,6 +281,32 @@ class TestarSegurancaSQL(unittest.TestCase):
         """
         valido, _ = validar_sql(sql)
         self.assertFalse(valido)
+    def test_bloqueia_comandos_destrutivos(self):
+        comandos = [
+            "DROP TABLE escolas",
+            "UPDATE escolas SET NO_UF = 'SP'",
+            "INSERT INTO escolas VALUES ('SP')",
+            "ALTER TABLE escolas ADD COLUMN teste INT",
+            "TRUNCATE TABLE escolas",
+        ]
+
+        for sql in comandos:
+            with self.subTest(sql=sql):
+                valido, _ = validar_sql(sql)
+                self.assertFalse(valido)
+
+    def test_bloqueia_tentativa_de_injecao_sql(self):
+        sql = """
+        SELECT NO_UF
+        FROM read_csv(
+            ?, delim=';', encoding='latin-1',
+            header=true, all_varchar=true
+        );
+        DROP TABLE escolas;
+        """
+
+        valido, _ = validar_sql(sql)
+        self.assertFalse(valido)
 
 if __name__ == "__main__":
     unittest.main()

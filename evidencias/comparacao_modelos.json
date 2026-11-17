@@ -1,0 +1,17 @@
+{
+    "modelo": "Qwen 2.5 3B",
+    "total_perguntas": 50,
+    "prompt_completo": {
+        "perguntas_avaliadas": 50,
+        "acertos": 50,
+        "acuracia": 100.0,
+        "consultas_bloqueadas": 0
+    },
+    "baseline": {
+        "perguntas_avaliadas": 50,
+        "consultas_executadas": 0,
+        "consultas_bloqueadas": 50,
+        "acertos": 0,
+        "acuracia": null
+    }
+}

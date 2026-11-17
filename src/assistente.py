@@ -42,10 +42,10 @@ Nesse tipo de pergunta:
   ou FROM seguido de um caminho literal.
 - O símbolo ? deve aparecer somente como primeiro argumento
   de read_csv, sem aspas nem crases.
-\- A chamada read_csv deve sempre começar exatamente assim:
+- A chamada read_csv deve sempre começar exatamente assim:
   read_csv(?, delim=';', encoding='latin-1',
            header=true, all_varchar=true)
-\- Nunca omita a vírgula depois do argumento ?.
+- Nunca omita a vírgula depois do argumento ?.
 \- Nunca altere os nomes das colunas autorizadas.
 \- Nunca invente nomes de colunas ou substitua letras
   dos nomes existentes.
@@ -209,8 +209,17 @@ REGRAS OBRIGATÓRIAS DE FIDELIDADE À PERGUNTA:
 \- Nunca coloque LIMIT antes de ORDER BY.
 \- Utilize somente um FROM com read_csv por consulta.
 \- Nunca acrescente outro FROM depois do LIMIT.
-- DIFERENÇA ENTRE REGISTROS E MATRÍCULAS:
+- DIFERENÇA ENTRE REGISTROS E ESCOLAS DISTINTAS:
 
+- Quando a pergunta solicitar quantidade de registros,
+  utilize COUNT(*).
+- Quando solicitar quantidade de escolas distintas,
+  utilize COUNT(DISTINCT CO_ENTIDADE).
+- Quando solicitar escolas distintas por estado,
+  utilize NO_UF e COUNT(DISTINCT CO_ENTIDADE),
+  agrupando por NO_UF.
+- Nunca utilize COUNT(*) para responder perguntas
+  que solicitem explicitamente escolas distintas.
 - Quando a pergunta solicitar quantidade de registros,
   utilize COUNT(*).
 - Quando a pergunta solicitar somente a quantidade de registros
@@ -316,16 +325,109 @@ def gerar_sql_validado(pergunta: str) -> str:
                 "mas o modelo não gerou uma função COUNT."
             )
 
-        if "sg_uf" not in sql_normalizado or "group by" not in sql_normalizado:
+        if (
+            not any(coluna in sql_normalizado for coluna in ("no_uf", "sg_uf"))
+            or "group by" not in sql_normalizado
+        ):
             raise ValueError(
-                "SQL rejeitado: a contagem por estado precisa agrupar por SG_UF."
-    )
+                "SQL rejeitado: a contagem por estado precisa agrupar "
+                "por NO_UF ou SG_UF."
+            )
 
     return sql
 
+def gerar_sql_baseline(pergunta: str) -> str:
+    """Gera SQL usando uma instrução simples, sem o prompt principal."""
 
+    cliente = ollama.Client(timeout=180)
+
+    resposta = cliente.chat(
+        model=MODELO,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "Transforme a pergunta em uma consulta SQL DuckDB. "
+                    "Retorne somente o SQL, sem Markdown ou explicações. "
+                    "Use apenas SELECT."
+                ),
+            },
+            {"role": "user", "content": pergunta},
+        ],
+    )
+
+    return resposta.message.content.strip()
+
+
+def explicar_sql(sql: str) -> str:
+    """Explica em linguagem simples o que a consulta SQL faz."""
+
+    cliente = ollama.Client(timeout=180)
+
+    resposta = cliente.chat(
+        model=MODELO,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "LIMIT apenas restringe a quantidade de linhas retornadas.\n"
+                    "LIMIT não ordena os resultados nem seleciona os maiores valores.\n"
+                    "Só diga que os resultados estão ordenados quando existir ORDER BY.\n"
+                    "Sem ORDER BY, não afirme que existe uma ordem específica.\n"
+                    "É proibido atribuir qualquer ordem aos resultados quando não houver ORDER BY.\n"
+                    "Não interprete LIMIT como os maiores, menores, primeiros ou últimos valores.\n"
+                    "Se houver LIMIT sem ORDER BY, diga apenas que a consulta limita a quantidade de linhas retornadas.\n"
+                    "Explique a consulta SQL em português simples e "
+                    "de forma curta.\n"
+                    "GROUP BY agrupa pelos campos que aparecem após GROUP BY, "
+                    "nunca pela função COUNT.\n"
+                    "Não descreva read_csv como filtro; ele lê os dados do arquivo.\n"
+                    "Não repita informações na explicação.\n"
+                    "Descreva somente o que realmente aparece no SQL.\n"
+                    "Explique o que é selecionado, os filtros, "
+                    "agrupamentos, ordenação e limite, quando existirem.\n"
+                    "COUNT(*) conta todas as linhas que atendem aos filtros.\n"
+                    "LIMIT limita a quantidade de linhas retornadas, "
+                    "não o total contado por COUNT(*).\n"
+                    "GROUP BY reúne registros com o mesmo valor.\n"
+                    "ORDER BY organiza os resultados.\n"
+                    "NO_UF representa o nome do estado.\n"
+                    "SG_UF representa a sigla do estado.\n"
+                    "Não invente filtros, ordenações ou informações.\n"
+                    "Não diga que uma contagem é aproximada sem motivo.\n"
+                    "Não explique os parâmetros técnicos do CSV, "
+                    "a menos que sejam importantes para a pergunta."
+                    
+                ),
+            },
+            {
+                "role": "user",
+                "content": f"Explique esta consulta SQL:\n{sql}",
+            },
+        ],
+    )
+
+    return resposta.message.content.strip()
 if __name__ == "__main__":
     pergunta = input("Faça uma pergunta sobre o Censo Escolar: ")
+
+def identificar_ambiguidade(pergunta: str) -> str | None:
+    """Identifica perguntas que precisam de esclarecimento."""
+
+    pergunta_normalizada = pergunta.casefold().strip()
+
+    if (
+        "quantas escolas" in pergunta_normalizada
+        and "por estado" not in pergunta_normalizada
+        and "por município" not in pergunta_normalizada
+        and "por municipio" not in pergunta_normalizada
+    ):
+        return (
+            "Você deseja contar os registros da base ou contar "
+            "as escolas distintas pelo código CO_ENTIDADE?"
+        )
+
+    return None
 
     try:
         sql = gerar_sql_validado(pergunta)

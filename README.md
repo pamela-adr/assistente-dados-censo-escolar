@@ -124,8 +124,8 @@ As consultas geradas pelo Qwen foram comparadas com os resultados obtidos pelas 
 Na avaliação registrada, o assistente apresentou:
 
 - Perguntas avaliadas: 50.
-- Acertos: 50.
-- Acurácia: 100%.
+- Acertos: 47.
+- Acurácia: 94%.
 
 Esse resultado corresponde ao conjunto de perguntas utilizado na avaliação e não representa uma garantia de precisão para qualquer pergunta que possa ser feita ao sistema.
 
@@ -149,24 +149,23 @@ A comparação foi utilizada para observar a importância das instruções espec
 
 Além da geração do SQL, implementei uma funcionalidade para explicar o que cada consulta realiza em linguagem simples.
 
-A intenção é permitir que a pessoa entenda quais informações estão sendo buscadas, quais filtros foram utilizados e como os resultados são organizados.
+Para verificar essa funcionalidade, gerei uma amostra de dez explicações. A revisão identificou duas explicações boas e oito parcialmente adequadas. Foram observadas imprecisões na interpretação de LIMIT, no delimitador do CSV, nos valores nulos e no significado de header=true.
 
-Para verificar essa funcionalidade, gerei uma amostra de dez explicações, registrada no arquivo `evidencias/avaliacao_explicacoes.json`.
-
-A amostra foi gerada para verificar a qualidade das explicações. A revisão do conteúdo ainda faz parte das etapas de validação do projeto.
+O resultado está registrado em `evidencias/avaliacao_explicacoes.json` e `evidencias/avaliacao_explicacoes.md`.
 
 ## 11. Estrutura das evidências
 
 Durante o desenvolvimento, organizei os resultados dos testes e das avaliações na pasta `evidencias`.
 
-Os arquivos registrados até o momento são:
+Os arquivos registrados são:
 
 - `resultado_avaliacao.txt`: resultado da avaliação do assistente principal.
 - `resultado_baseline.json`: resultados do experimento baseline.
 - `comparacao_modelos.json`: comparação entre os experimentos.
 - `catalogo_testes_seguranca.md`: registro dos testes de segurança.
 - `avaliacao_explicacoes.json`: amostra de explicações das consultas.
-- `requirements.txt`: lista as dependências e suas versões utilizadas no projeto.
+- `analise_avaliacao.md`: análise dos resultados da avaliação.
+- `avaliacao_explicacoes.md`: resultado da revisão das dez explicações.
 
 ## 12. Execução do projeto
 
@@ -198,6 +197,6 @@ O desenvolvimento deste projeto permitiu trabalhar com geração de consultas SQ
 
 Durante o processo, precisei ajustar as instruções utilizadas pelo modelo, testar diferentes perguntas e verificar se as consultas geradas correspondiam aos resultados esperados.
 
-A avaliação realizada apresentou 50 acertos nas 50 perguntas registradas, enquanto o experimento com o prompt simplificado mostrou dificuldades para gerar consultas compatíveis com a estrutura da base.
+A avaliação realizada apresentou 47 acertos em 50 perguntas (94%), enquanto o experimento com o prompt simplificado mostrou dificuldades para gerar consultas compatíveis com a estrutura da base.
 
-Com as principais funcionalidades implementadas e os primeiros testes realizados, estou avançando na revisão das evidências, na documentação e na preparação do projeto para a entrega final.
+A revisão das dez explicações também identificou pontos que precisam de melhoria, reforçando a necessidade de validação humana das respostas do modelo.

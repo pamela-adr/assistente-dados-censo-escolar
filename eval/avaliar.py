@@ -47,8 +47,11 @@ def executar_pergunta_qwen(pergunta: dict) -> dict:
     sql = gerar_sql_validado(pergunta["pergunta"])
     resultado = consultar_censo(sql)
 
-    if pergunta["tipo"] in ("contagem", "soma"):
+    if pergunta["tipo"] == "contagem":
         resultado_qwen = resultado[0][0]
+
+    elif pergunta["tipo"] == "soma":
+        resultado_qwen = resultado[0][-1]
 
     elif pergunta["tipo"] == "agrupamento":
         resultado_qwen = [

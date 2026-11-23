@@ -15,3 +15,11 @@ venv/
 .DS_Store
 Thumbs.db
 *.log
+# Arquivos de avaliação temporários
+eval/resultados_qwen_backup.json
+
+# Scripts auxiliares de conferência
+conferir.py
+conferir_erros.py
+reexecutar_erros.py
+verificar_coluna.py

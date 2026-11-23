@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import os
 import duckdb
 import sqlglot
 from sqlglot import exp
@@ -9,16 +10,21 @@ except ImportError:
     from seguranca import validar_sql
 
 def localizar_arquivo_censo() -> Path:
-    """Localiza o CSV do Censo Escolar 2024 na pasta Downloads."""
-    pasta_usuario = Path.home()
+    """Localiza o CSV do Censo Escolar 2024."""
 
-    arquivo = (
-        pasta_usuario
-        / "Downloads"
-        / "microdados_censo_escolar_2024_defeso"
-        / "dados"
-        / "microdados_ed_basica_2024.csv"
-    )
+    caminho_configurado = os.getenv("CENSO_CSV")
+
+    if caminho_configurado:
+        arquivo = Path(caminho_configurado)
+    else:
+        pasta_usuario = Path.home()
+        arquivo = (
+            pasta_usuario
+            / "Downloads"
+            / "microdados_censo_escolar_2024_defeso"
+            / "dados"
+            / "microdados_ed_basica_2024.csv"
+        )
 
     if not arquivo.is_file():
         raise FileNotFoundError(

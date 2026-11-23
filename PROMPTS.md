@@ -8,7 +8,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentada uma solução para localizar o arquivo na pasta Downloads e realizar a leitura utilizando DuckDB.
 
-**Decisão:** A solução foi aproveitada e adaptada à estrutura de diretórios do projeto.
+**Decisão:** Aceita e adaptada. A abordagem foi aproveitada porque permitiu realizar a leitura dos microdados, mas o caminho do arquivo foi ajustado à estrutura utilizada no projeto.
 
 ## 2. Contagem de registros
 
@@ -16,7 +16,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentada uma consulta SQL com `COUNT(*)` para obter a quantidade total de registros.
 
-**Decisão:** A abordagem foi utilizada no código.
+**Decisão:** Aceita. A consulta foi utilizada por atender à necessidade de contar os registros do conjunto de dados.
 
 ## 3. Validação de consultas SQL
 
@@ -24,7 +24,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentada uma validação da estrutura da consulta antes da execução.
 
-**Decisão:** A solução foi aproveitada e ampliada com testes de segurança.
+**Decisão:** Aceita e ampliada. A estrutura foi aproveitada, mas recebeu validações adicionais para atender aos requisitos de segurança do projeto, incluindo testes para comandos proibidos.
 
 ## 4. Criação de testes automatizados
 
@@ -32,7 +32,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foram apresentados exemplos utilizando `unittest`.
 
-**Decisão:** Os exemplos foram adaptados à estrutura de testes do projeto.
+**Decisão:** Aceita e adaptada. Os exemplos foram utilizados como base e ajustados às funções e à estrutura do projeto para verificar os comportamentos esperados.
 
 ## 5. Integração com o modelo local
 
@@ -40,7 +40,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentada uma estrutura de comunicação com o modelo e orientações para organizar o prompt.
 
-**Decisão:** A abordagem foi incorporada ao assistente e ajustada durante os testes.
+**Decisão:** Aceita e adaptada. A abordagem foi incorporada ao assistente, com ajustes realizados durante os testes para adequar a geração de consultas ao esquema dos dados.
 
 ## 6. Interface com Streamlit
 
@@ -48,7 +48,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foram apresentadas orientações para exibir tabelas e gráficos.
 
-**Decisão:** A solução foi adaptada à interface do projeto.
+**Decisão:** Aceita e adaptada. A solução foi utilizada porque atendia à necessidade de apresentar os resultados de forma visual, com ajustes à interface do projeto.
 
 ## 7. Tratamento de perguntas ambíguas
 
@@ -56,7 +56,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi sugerida uma verificação de termos na pergunta para identificar situações ambíguas.
 
-**Decisão:** A lógica foi adaptada para solicitar esclarecimentos ao usuário em situações específicas.
+**Decisão:** Parcialmente aceita e adaptada. A ideia foi aproveitada, mas a lógica foi ajustada para identificar situações específicas e solicitar esclarecimentos antes de gerar a consulta.
 
 ## 8. Estimativa de custo das consultas
 
@@ -64,7 +64,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentada uma estrutura para calcular uma estimativa e retorná-la junto aos dados consultados.
 
-**Decisão:** A implementação foi adaptada ao funcionamento do DuckDB.
+**Decisão:** Aceita e adaptada. A estrutura foi ajustada ao funcionamento do DuckDB para apresentar uma estimativa relacionada à execução da consulta.
 
 ## 9. Avaliação das consultas geradas
 
@@ -72,7 +72,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foram apresentadas orientações para executar perguntas de teste, comparar resultados e registrar as divergências.
 
-**Decisão:** A estrutura foi utilizada na avaliação experimental, com análise dos resultados e identificação de falhas.
+**Decisão:** Aceita e adaptada. A estrutura foi utilizada na avaliação experimental, permitindo comparar os resultados do modelo com as consultas de referência e identificar divergências.
 
 ## 10. Testes de segurança e integração contínua
 
@@ -80,7 +80,7 @@ Este documento reúne interações com ferramentas de inteligência artificial u
 
 **Resumo da resposta:** Foi apresentado um workflow para instalar as dependências e executar os testes com `unittest`.
 
-**Decisão:** O arquivo foi adaptado ao projeto e a execução foi confirmada com sucesso no GitHub Actions.
+**Decisão:** Aceita e adaptada. O workflow foi ajustado à estrutura do projeto e sua execução foi confirmada com sucesso no GitHub Actions.
 
 ---
 

@@ -1,88 +1,88 @@
-# Assistente de Dados Educacionais do Brasil com Text-to-SQL Seguro
+﻿# Assistente de Dados Educacionais do Brasil com Text-to-SQL Seguro
 
-**Curso:** EAD_PROINT_100.DD-ADS-PI-10-74.2026.74  
-**Disciplina:** Projeto Integrador  
-**Integrante:** Pamela Adrielly — RA: 2408194
+**Curso:** Análise e Desenvolvimento de Sistemas  
+**Disciplina:** Projeto Integrador
 
 ---
 
 ## 1. Sobre o projeto
 
-Neste projeto, desenvolvi um assistente de dados educacionais que permite consultar informações do Censo Escolar 2024 por meio de perguntas feitas em linguagem natural.
+Neste projeto, desenvolvi um assistente de dados que permite consultar informações do Censo Escolar 2024 por meio de perguntas em português.
 
-A ideia surgiu da possibilidade de facilitar o acesso aos dados educacionais, permitindo que uma pessoa faça perguntas em português sem precisar conhecer SQL. A partir dessas perguntas, o sistema utiliza um modelo de linguagem para gerar consultas, verifica se elas seguem as regras de segurança e apresenta os resultados.
+A proposta é facilitar o acesso aos dados sem que o usuário precise saber escrever SQL. Basta fazer uma pergunta, e o sistema utiliza um modelo de inteligência artificial para gerar a consulta, verificar se ela é segura e apresentar o resultado.
 
 ## 2. Objetivo
 
-O objetivo é desenvolver uma ferramenta que facilite a consulta aos microdados do Censo Escolar 2024, utilizando inteligência artificial para transformar perguntas em consultas SQL.
+O objetivo é utilizar inteligência artificial para transformar perguntas feitas em linguagem natural em consultas SQL.
 
-Além de gerar as consultas, procurei implementar mecanismos para evitar operações não permitidas e reduzir os riscos relacionados à execução de comandos SQL.
+Além de gerar as consultas, também implementei verificações para impedir comandos que não são permitidos e evitar que uma consulta gerada pelo modelo seja executada sem passar pelas regras de segurança do projeto.
 
 ## 3. Fonte de dados
 
 Utilizei os microdados do Censo Escolar 2024, disponibilizados pelo Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP).
 
-O arquivo principal utilizado no projeto é `microdados_ed_basica_2024.csv`.
+O arquivo utilizado é `microdados_ed_basica_2024.csv`.
 
-A leitura dos dados é feita com o DuckDB, utilizando o ponto e vírgula como delimitador, codificação Latin-1 e leitura das colunas como texto.
+Para consultar os dados, utilizei o DuckDB. A leitura do arquivo considera o ponto e vírgula como delimitador, codificação Latin-1 e as colunas como texto.
 
 ## 4. Tecnologias utilizadas
 
-Durante o desenvolvimento, utilizei as seguintes tecnologias:
+As tecnologias utilizadas no desenvolvimento foram:
 
-- **Python:** linguagem utilizada para desenvolver a aplicação e organizar suas funcionalidades.
+- **Python:** linguagem utilizada para desenvolver o projeto.
 - **DuckDB:** utilizado para consultar os microdados do Censo Escolar.
-- **SQLGlot:** utilizado na análise e validação das consultas SQL.
-- **Ollama:** utilizado para executar localmente o modelo de linguagem.
-- **Qwen 2.5 3B:** modelo utilizado para interpretar as perguntas e gerar consultas SQL.
-- **Streamlit:** utilizado para desenvolver a interface da aplicação.
+- **SQLGlot:** utilizado para analisar e validar as consultas SQL.
+- **Ollama:** utilizado para executar o modelo de inteligência artificial localmente.
+- **Qwen 2.5 3B:** modelo utilizado para interpretar as perguntas e gerar as consultas SQL.
+- **Streamlit:** utilizado para criar a interface da aplicação.
 
 ## 5. Funcionalidades desenvolvidas
 
-Ao longo do desenvolvimento, implementei as seguintes funcionalidades:
+Durante o desenvolvimento, implementei as seguintes funcionalidades:
 
-- Recebimento de perguntas em linguagem natural.
-- Geração de consultas SQL utilizando o modelo Qwen 2.5 3B.
-- Validação das consultas antes da execução.
-- Restrição das operações SQL permitidas.
-- Bloqueio de comandos que podem modificar ou excluir dados.
-- Limitação da quantidade de linhas retornadas.
-- Estimativa de custo das consultas com base em critérios definidos na aplicação.
-- Apresentação dos resultados em tabelas.
-- Exibição de gráficos quando o resultado permite esse tipo de visualização.
-- Explicação das consultas SQL em linguagem simples.
+- Fazer perguntas sobre os dados utilizando linguagem natural.
+- Gerar consultas SQL com o Qwen 2.5 3B.
+- Identificar perguntas que precisam de mais informações antes de gerar a consulta.
+- Validar o SQL antes de executar.
+- Bloquear comandos que possam modificar ou excluir dados.
+- Restringir as fontes de dados e as colunas utilizadas.
+- Limitar os resultados a 1.000 linhas.
+- Estimar o custo das consultas com base nos critérios definidos no projeto.
+- Exibir os resultados em tabelas e gráficos.
+- Apresentar uma explicação da consulta em linguagem simples.
 
 ## 6. Segurança das consultas
 
-Uma das partes que exigiu atenção durante o desenvolvimento foi a segurança das consultas geradas pelo modelo.
+Uma das partes que exigiu mais atenção foi a segurança das consultas geradas pela inteligência artificial.
 
-Para isso, utilizei o SQLGlot na análise da estrutura das consultas e implementei regras para permitir apenas operações autorizadas.
+Para isso, utilizei o SQLGlot para analisar a estrutura do SQL antes de permitir sua execução.
 
-Entre os controles desenvolvidos estão:
+As regras implementadas incluem:
 
-- Permissão apenas para consultas do tipo `SELECT`.
-- Bloqueio de comandos como `DELETE`, `UPDATE`, `DROP`, `INSERT` e `ALTER`.
-- Bloqueio de múltiplas consultas enviadas na mesma instrução.
-- Restrição das fontes de dados e das colunas permitidas.
-- Controle sobre a leitura do arquivo CSV.
-- Limitação das linhas retornadas.
+- Permitir somente consultas do tipo `SELECT`.
+- Bloquear comandos como `DELETE`, `UPDATE`, `DROP`, `INSERT` e `ALTER`.
+- Impedir a execução de várias consultas na mesma instrução.
+- Restringir as fontes de dados utilizadas.
+- Verificar se as colunas solicitadas são permitidas.
+- Controlar a leitura do arquivo CSV.
+- Limitar os resultados a 1.000 linhas.
 
-Também desenvolvi testes automatizados para verificar se essas regras estão funcionando.
+Também criei testes automatizados para verificar se essas regras estão funcionando. Nos testes realizados, os 29 casos de segurança foram aprovados.
 
-Até o momento, foram executados 29 testes relacionados à segurança, todos aprovados.
+A documentação dessas regras está em [`docs/seguranca.md`](docs/seguranca.md).
 
 ## 7. Análise exploratória dos dados
 
-Antes de desenvolver as consultas, realizei uma análise inicial dos microdados para conhecer melhor a estrutura do arquivo e identificar características importantes da base.
+Antes de começar a desenvolver as consultas, analisei os microdados para entender melhor a estrutura do arquivo e algumas características da base.
 
-O arquivo principal apresentou:
+O arquivo apresentou:
 
 - 215.545 registros.
 - 426 colunas.
 
-Também analisei alguns campos utilizados no projeto. O campo `CO_ENTIDADE` apresentou 215.545 valores únicos e nenhum valor vazio.
+Também verifiquei alguns campos utilizados no projeto. O `CO_ENTIDADE` apresentou 215.545 valores únicos e nenhum valor vazio.
 
-Na variável `QT_MAT_BAS`, identifiquei 36.259 valores vazios. Os mesmos registros também apresentam valores vazios em `QT_TUR_BAS` e `QT_DOC_BAS`.
+Na variável `QT_MAT_BAS`, encontrei 36.259 valores vazios. Os mesmos registros também apresentam valores vazios em `QT_TUR_BAS` e `QT_DOC_BAS`.
 
 A distribuição desses registros por situação de funcionamento foi:
 
@@ -90,20 +90,20 @@ A distribuição desses registros por situação de funcionamento foi:
 - Paralisada: 31.321 registros.
 - Extinta no ano do Censo: 3.159 registros.
 
-Essa análise mostrou que os valores ausentes estão concentrados principalmente em escolas paralisadas, mas também aparecem em escolas em atividade e extintas no ano do Censo.
+Com essa análise, percebi que os valores vazios aparecem principalmente em escolas paralisadas, mas também estão presentes em escolas em atividade e extintas no ano do Censo.
 
-Por esse motivo, não considerei adequado transformar automaticamente os valores ausentes em zero ou excluir esses registros sem uma investigação adicional.
+Por isso, não considerei correto substituir esses valores automaticamente por zero ou simplesmente excluir os registros.
 
-**Limitação:** essa análise descreve o comportamento observado nos dados, mas não determina, por si só, a causa dos valores ausentes.
+**Limitação:** os dados mostram onde estão concentrados os valores vazios, mas não permitem afirmar qual foi a causa dessas ausências.
 
-## 8. Variáveis utilizadas e definições
+## 8. Variáveis utilizadas
 
-As definições das variáveis foram consultadas no dicionário dos microdados do Censo Escolar 2024, disponibilizado pelo INEP.
+Consultei o dicionário dos microdados do Censo Escolar 2024, disponibilizado pelo INEP, para verificar o significado das variáveis utilizadas.
 
-As principais variáveis analisadas foram:
+As principais foram:
 
-- `QT_MAT_BAS`: número de matrículas da educação básica, incluindo as etapas e modalidades descritas pelo INEP e excluindo matrículas em turmas exclusivamente de atividade complementar e exclusivamente de Atendimento Educacional Especializado (AEE).
-- `QT_TUR_BAS`: número de turmas da educação básica.
+- `QT_MAT_BAS`: quantidade de matrículas da educação básica, considerando as etapas e modalidades descritas pelo INEP e excluindo matrículas em turmas exclusivamente de atividade complementar e exclusivamente de Atendimento Educacional Especializado (AEE).
+- `QT_TUR_BAS`: quantidade de turmas da educação básica.
 - `TP_DEPENDENCIA`: código da dependência administrativa da escola:
   - `1`: Federal.
   - `2`: Estadual.
@@ -117,86 +117,120 @@ As principais variáveis analisadas foram:
 
 ## 9. Avaliação do assistente
 
-Para avaliar o funcionamento do assistente, preparei um conjunto de 50 perguntas com consultas SQL de referência.
+Para testar o assistente, preparei um conjunto de 50 perguntas com consultas SQL de referência.
 
-As consultas geradas pelo Qwen foram comparadas com os resultados obtidos pelas consultas de referência.
+Depois, comparei os resultados das consultas geradas pelo Qwen 2.5 3B com os resultados esperados.
 
-Na avaliação registrada, o assistente apresentou:
+O resultado foi:
 
 - Perguntas avaliadas: 50.
 - Acertos: 47.
 - Acurácia: 94%.
 
-Esse resultado corresponde ao conjunto de perguntas utilizado na avaliação e não representa uma garantia de precisão para qualquer pergunta que possa ser feita ao sistema.
+As três perguntas em que houve divergência foram mantidas na avaliação. Não fiz alterações nos resultados para aumentar a porcentagem de acertos.
 
-### 9.1 Comparação entre os prompts
+### 9.1 Comparação com o baseline
 
-Também realizei uma comparação utilizando o mesmo modelo, mas com uma instrução simplificada, sem as orientações detalhadas do prompt principal.
+Também fiz um teste utilizando o mesmo modelo, mas com uma instrução mais simples, sem as orientações detalhadas do prompt principal.
 
 O resultado foi:
 
 - Perguntas avaliadas: 50.
-- Consultas bloqueadas pela validação: 50.
 - Consultas executadas: 0.
+- Consultas bloqueadas: 50.
+- Acurácia: não calculável.
 
-Nesse experimento, o modelo não conseguiu gerar consultas compatíveis com as fontes de dados e as colunas autorizadas pelo projeto.
+Nenhuma das consultas geradas nesse teste passou pelas regras de segurança. Como nenhuma chegou a ser executada, não foi possível calcular a acurácia do baseline.
 
-Como nenhuma consulta foi executada, não foi possível calcular a acurácia do baseline.
+Essa comparação mostrou a importância de informar ao modelo quais são as fontes de dados e as colunas disponíveis, além de explicar como a base está organizada.
 
-A comparação foi utilizada para observar a importância das instruções específicas sobre a estrutura dos dados na geração das consultas.
+### 9.2 Avaliação das explicações
 
-## 10. Explicação das consultas
+Também testei a funcionalidade que explica as consultas SQL em linguagem simples.
 
-Além da geração do SQL, implementei uma funcionalidade para explicar o que cada consulta realiza em linguagem simples.
+Para isso, analisei 10 explicações geradas pelo modelo. O resultado foi:
 
-Para verificar essa funcionalidade, gerei uma amostra de dez explicações. A revisão identificou duas explicações boas e oito parcialmente adequadas. Foram observadas imprecisões na interpretação de LIMIT, no delimitador do CSV, nos valores nulos e no significado de header=true.
+- 2 explicações boas.
+- 8 explicações parcialmente adequadas.
 
-O resultado está registrado em `evidencias/avaliacao_explicacoes.json` e `evidencias/avaliacao_explicacoes.md`.
+Durante a revisão, encontrei algumas imprecisões relacionadas ao uso de `LIMIT`, ao delimitador do CSV, aos valores nulos e ao significado de `header=true`.
 
-## 11. Estrutura das evidências
+Os resultados dessa análise estão registrados em `evidencias/avaliacao_explicacoes.md`.
 
-Durante o desenvolvimento, organizei os resultados dos testes e das avaliações na pasta `evidencias`.
+A avaliação completa do sistema está documentada em [`docs/avaliacao.md`](docs/avaliacao.md).
 
-Os arquivos registrados são:
+## 10. Evidências
 
-- `resultado_avaliacao.txt`: resultado da avaliação do assistente principal.
-- `resultado_baseline.json`: resultados do experimento baseline.
-- `comparacao_modelos.json`: comparação entre os experimentos.
+Guardei os resultados dos testes e das avaliações na pasta `evidencias/`.
+
+Os principais arquivos são:
+
+- `resultado_avaliacao.txt`: resultado dos testes realizados com o assistente.
+- `resultado_baseline.json`: registro das consultas geradas pelo baseline.
+- `comparacao_modelos.json`: comparação entre os dois experimentos.
 - `catalogo_testes_seguranca.md`: registro dos testes de segurança.
-- `avaliacao_explicacoes.json`: amostra de explicações das consultas.
-- `analise_avaliacao.md`: análise dos resultados da avaliação.
+- `avaliacao_explicacoes.json`: explicações utilizadas na revisão.
+- `analise_avaliacao.md`: análise das divergências encontradas nas perguntas.
 - `avaliacao_explicacoes.md`: resultado da revisão das dez explicações.
 
-## 12. Execução do projeto
+## 11. Como executar o projeto
 
-Para executar o projeto, é necessário ter o Python 3.13 e o Ollama instalados. Também é necessário disponibilizar os microdados do Censo Escolar 2024 no caminho configurado no arquivo `src/dados.py`.
+Para executar o projeto localmente, é necessário ter o Python 3.13, o Ollama e os microdados do Censo Escolar 2024.
 
-Primeiro, instale as dependências do projeto:
+Primeiro, instale as dependências:
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Em seguida, baixe o modelo utilizado pelo assistente:
+Depois, baixe o modelo utilizado:
 
 ```powershell
 ollama pull qwen2.5:3b
 ```
 
-Com o Ollama em execução, inicie a interface:
+Com o Ollama em execução, inicie a aplicação:
 
 ```powershell
 python -m streamlit run app.py
 ```
 
-A aplicação será aberta no navegador e permitirá enviar perguntas sobre os dados do Censo Escolar 2024.
+A interface será aberta no navegador, permitindo fazer perguntas sobre os dados do Censo Escolar.
 
-## 13. Considerações finais
+### 11.1 Execução com Docker
 
-O desenvolvimento deste projeto permitiu trabalhar com geração de consultas SQL utilizando inteligência artificial, análise de dados educacionais e validação de segurança.
+Também é possível executar o projeto utilizando Docker Compose.
 
-Durante o processo, precisei ajustar as instruções utilizadas pelo modelo, testar diferentes perguntas e verificar se as consultas geradas correspondiam aos resultados esperados.
+Com o Docker instalado e os microdados disponíveis no caminho configurado no `docker-compose.yml`, execute:
 
-A avaliação realizada apresentou 47 acertos em 50 perguntas (94%), enquanto o experimento com o prompt simplificado mostrou dificuldades para gerar consultas compatíveis com a estrutura da base.
+```powershell
+docker compose up --build
+```
 
-A revisão das dez explicações também identificou pontos que precisam de melhoria, reforçando a necessidade de validação humana das respostas do modelo.
+Depois que a aplicação iniciar, acesse `http://localhost:8501` no navegador.
+
+Nessa configuração, o Ollama continua sendo executado na máquina, enquanto a aplicação roda dentro do container.
+
+## 12. Arquitetura do sistema
+
+O funcionamento acontece nesta ordem:
+
+1. O usuário envia uma pergunta pela interface do Streamlit.
+2. O assistente verifica se a pergunta precisa de algum esclarecimento.
+3. O Qwen 2.5 3B, executado pelo Ollama, gera a consulta SQL.
+4. O SQLGlot verifica se a consulta segue as regras de segurança.
+5. O DuckDB executa a consulta nos dados autorizados.
+6. O resultado aparece na interface em forma de tabela, gráfico ou explicação.
+
+A descrição mais detalhada está em [`docs/arquitetura.md`](docs/arquitetura.md).
+
+## 13. Licenças utilizadas
+
+As principais tecnologias utilizadas possuem as seguintes licenças:
+
+- DuckDB: MIT.
+- SQLGlot: MIT.
+- Streamlit: Apache 2.0.
+- Ollama: código aberto.
+
+Os microdados utilizados são públicos e foram disponibilizados pelo INEP.

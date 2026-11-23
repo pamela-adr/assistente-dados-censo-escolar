@@ -1,4 +1,5 @@
 
+import os
 import ollama
 
 try:
@@ -46,11 +47,11 @@ Nesse tipo de pergunta:
   read_csv(?, delim=';', encoding='latin-1',
            header=true, all_varchar=true)
 - Nunca omita a vírgula depois do argumento ?.
-\- Nunca altere os nomes das colunas autorizadas.
-\- Nunca invente nomes de colunas ou substitua letras
+- Nunca altere os nomes das colunas autorizadas.
+- Nunca invente nomes de colunas ou substitua letras
   dos nomes existentes.
 - Não coloque read_csv entre crases.
-\- Use somente estas colunas:
+- Use somente estas colunas:
   NO_UF, SG_UF, NO_MUNICIPIO, CO_MUNICIPIO, CO_ENTIDADE,
   TP_DEPENDENCIA, QT_MAT_BAS, QT_MAT_FUND, QT_MAT_MED,
   QT_MAT_INF, QT_TUR_BAS, QT_DOC_BAS,
@@ -92,9 +93,9 @@ LIMIT 5
 Sempre use esse padrão de conversão ao somar QT_MAT_FUND.
 - Nunca utilize TQ_MAT_BAS, TQ_MAT_FUND,
   TQ_MAT_MED ou TQ_MAT_INF.
-\- NO_REGIAO armazena o nome da região geográfica,
+- NO_REGIAO armazena o nome da região geográfica,
   como 'Norte', 'Nordeste', 'Sudeste', 'Sul' e 'Centro-Oeste'.
-\- TP_LOCALIZACAO identifica a localização da escola:
+- TP_LOCALIZACAO identifica a localização da escola:
   '1' representa urbana e '2' representa rural.
 - NO_UF armazena o nome completo do estado, por exemplo:
   'São Paulo', 'Minas Gerais' e 'Bahia'.
@@ -154,7 +155,7 @@ Não converta nomes ou siglas de estados para números.
 - TP_DEPENDENCIA contém os códigos '1', '2', '3' e '4',
   não as letras E, M ou P.
 - Não invente filtros que não foram solicitados.
-\- Em perguntas que solicitam agrupamento por uma categoria,
+- Em perguntas que solicitam agrupamento por uma categoria,
   utilize exatamente a coluna dessa categoria no SELECT e GROUP BY.
 - TP_DEPENDENCIA representa a dependência administrativa:
   '1' = Federal, '2' = Estadual, '3' = Municipal e '4' = Privada.
@@ -202,13 +203,13 @@ REGRAS OBRIGATÓRIAS DE FIDELIDADE À PERGUNTA:
   realmente solicitados na pergunta.
 - Para agrupamentos por categoria, não inclua NO_UF ou SG_UF
   se a pergunta não solicitar informações por estado.
-\- Não inclua NO_UF ou SG_UF quando a pergunta não solicitar
+- Não inclua NO_UF ou SG_UF quando a pergunta não solicitar
   agrupamento ou filtro por estado.
-\- Em perguntas com ordenação, utilize obrigatoriamente:
+- Em perguntas com ordenação, utilize obrigatoriamente:
   GROUP BY, ORDER BY e LIMIT, nessa ordem.
-\- Nunca coloque LIMIT antes de ORDER BY.
-\- Utilize somente um FROM com read_csv por consulta.
-\- Nunca acrescente outro FROM depois do LIMIT.
+- Nunca coloque LIMIT antes de ORDER BY.
+- Utilize somente um FROM com read_csv por consulta.
+- Nunca acrescente outro FROM depois do LIMIT.
 - DIFERENÇA ENTRE REGISTROS E ESCOLAS DISTINTAS:
 
 - Quando a pergunta solicitar quantidade de registros,
@@ -260,7 +261,10 @@ Nunca substitua AS por vírgula.
 def perguntar_ao_modelo(pergunta: str) -> str:
     """Gera uma consulta SQL usando o modelo local."""
 
-    cliente = ollama.Client(timeout=180)
+    cliente = ollama.Client(
+        host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        timeout=180
+    )
 
     resposta = cliente.chat(
         model=MODELO,
@@ -339,7 +343,10 @@ def gerar_sql_validado(pergunta: str) -> str:
 def gerar_sql_baseline(pergunta: str) -> str:
     """Gera SQL usando uma instrução simples, sem o prompt principal."""
 
-    cliente = ollama.Client(timeout=180)
+    cliente = ollama.Client(
+        host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        timeout=180
+    )
 
     resposta = cliente.chat(
         model=MODELO,
@@ -362,7 +369,10 @@ def gerar_sql_baseline(pergunta: str) -> str:
 def explicar_sql(sql: str) -> str:
     """Explica em linguagem simples o que a consulta SQL faz."""
 
-    cliente = ollama.Client(timeout=180)
+    cliente = ollama.Client(
+        host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        timeout=180
+    )
 
     resposta = cliente.chat(
         model=MODELO,

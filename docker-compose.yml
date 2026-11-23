@@ -1,0 +1,13 @@
+services:
+  assistente-censo:
+    build: .
+    container_name: assistente-censo
+    ports:
+      - "8501:8501"
+    environment:
+      OLLAMA_HOST: http://host.docker.internal:11434
+      CENSO_CSV: /dados/microdados_ed_basica_2024.csv
+    volumes:
+      - "${USERPROFILE}/Downloads/microdados_censo_escolar_2024_defeso/dados:/dados:ro"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

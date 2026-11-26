@@ -136,13 +136,14 @@ Também fiz um teste utilizando o mesmo modelo, mas com uma instrução mais sim
 O resultado foi:
 
 - Perguntas avaliadas: 50.
-- Consultas executadas: 0.
-- Consultas bloqueadas: 50.
-- Acurácia: não calculável.
+- Consultas bloqueadas: 46.
+- Erros de execução: 2.
+- Consultas executadas corretamente: 2.
+- Taxa de acerto geral: 4%.
 
-Nenhuma das consultas geradas nesse teste passou pelas regras de segurança. Como nenhuma chegou a ser executada, não foi possível calcular a acurácia do baseline.
+As duas consultas executadas corretamente foram as perguntas 37 e 38. A maioria das consultas foi bloqueada pelo validador devido à utilização de caminhos de arquivos diretamente, em vez do parâmetro esperado pelo sistema. Também ocorreram erros de execução.
 
-Essa comparação mostrou a importância de informar ao modelo quais são as fontes de dados e as colunas disponíveis, além de explicar como a base está organizada.
+O baseline apresentou uma taxa de acerto geral de 4%, considerando as 50 perguntas avaliadas. Esse resultado foi inferior ao desempenho de 94% obtido pelo sistema principal.
 
 ### 9.2 Avaliação das explicações
 

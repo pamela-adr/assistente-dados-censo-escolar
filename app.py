@@ -49,7 +49,7 @@ if executar:
                 st.code(sql, language="sql")
 
                 with st.spinner("Preparando a explicação da consulta..."):
-                    explicacao = explicar_sql(sql)
+                    explicacao = explicar_sql(sql, pergunta)
 
                 st.subheader("O que essa consulta faz?")
                 st.write(explicacao)

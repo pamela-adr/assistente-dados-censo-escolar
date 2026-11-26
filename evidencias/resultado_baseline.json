@@ -2,351 +2,363 @@
     {
         "id": 1,
         "pergunta": "Quantos registros existem no Censo Escolar de 2024?",
-        "sql_gerado": "SELECT COUNT(*) FROM Censo_Escolar_2024",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censo_2024.csv')",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 2,
         "pergunta": "Quantos registros existem por estado?",
-        "sql_gerado": "SELECT state, COUNT(*) AS num_registros FROM your_table_name GROUP BY state",
+        "sql_gerado": "SELECT DISTINCT NO_UF FROM read_csv('censoescolar2024.csv') GROUP BY NO_UF",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: state"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 3,
         "pergunta": "Quais são os cinco estados com mais registros no Censo Escolar?",
-        "sql_gerado": "SELECT estado, COUNT(*) as numero_de_registros\nFROM censo_escolar\nGROUP BY estado\nORDER BY numero_de_registros DESC\nLIMIT 5",
+        "sql_gerado": "SELECT NO_UF FROM read_csv('censo_2024.csv') GROUP BY NO_UF ORDER BY COUNT(*) DESC LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: estado"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 4,
         "pergunta": "Quantos registros do Censo Escolar existem no estado de São Paulo?",
-        "sql_gerado": "SELECT COUNT(*) FROM CensoEscolar WHERE estado = 'São Paulo'",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censo_escolar_2024.csv') WHERE NO_UF = 'SP'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: estado"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 5,
         "pergunta": "Quantos registros existem no estado de Minas Gerais?",
-        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE uf = 'MG'",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar_2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'MG'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: uf"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 6,
         "pergunta": "Quantos registros possuem o nome do município preenchido?",
-        "sql_gerado": "SELECT COUNT(*) FROM your_table_name WHERE municipio IS NOT NULL",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar2024.csv') WHERE NO_MUNICIPIO IS NOT NULL",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: municipio"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 7,
         "pergunta": "Quantos registros possuem o código da entidade preenchido?",
-        "sql_gerado": "SELECT COUNT(*) FROM tabela_entidade WHERE codigo_entidade IS NOT NULL",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar2024.csv') WHERE CO_ENTIDADE IS NOT NULL;",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: codigo_entidade"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 8,
         "pergunta": "Quais são os cinco estados com menos registros no Censo Escolar?",
-        "sql_gerado": "SELECT estado, COUNT(*) as num_registros\nFROM Censo_Escolar\nGROUP BY estado\nORDER BY num_registros ASC\nLIMIT 5",
+        "sql_gerado": "SELECT SG_UF, COUNT(*) as TOTAL FROM read_csv('censoescola2024.csv') GROUP BY SG_UF ORDER BY TOTAL LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: estado"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 9,
         "pergunta": "Quantos registros existem no estado da Bahia?",
-        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE uf = 'BA'",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censo_2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'BA'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: uf"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 10,
         "pergunta": "Quantos registros existem no estado do Paraná?",
-        "sql_gerado": "SELECT COUNT(*) FROM estados WHERE nome = 'Paraná'",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'PR'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: nome"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 11,
         "pergunta": "Quais são os dez estados com mais registros no Censo Escolar?",
-        "sql_gerado": "SELECT estado, COUNT(*) AS quantidade_registros\nFROM censo_escolar\nGROUP BY estado\nORDER BY quantidade_registros DESC\nLIMIT 10",
+        "sql_gerado": "SELECT SG_UF, COUNT(*) AS Quantidade FROM read_csv(\"censoescola2024.csv\", delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY SG_UF ORDER BY Quantidade DESC LIMIT 10",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: estado"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 12,
         "pergunta": "Quantas siglas de estados diferentes existem no Censo Escolar de 2024?",
-        "sql_gerado": "SELECT COUNT(DISTINCT SIGLA_ESTADO) AS NUMERO_DE_SIGLAS FROM Censo_Escolar_2024",
+        "sql_gerado": "SELECT DISTINCT NO_UF FROM read_csv('censo_escolar_2024.csv')",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: SIGLA_ESTADO"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 13,
         "pergunta": "Quantos municípios diferentes aparecem no Censo Escolar de 2024?",
-        "sql_gerado": "SELECT COUNT(DISTINCT municipio) FROM censoescolares_2024",
+        "sql_gerado": "SELECT DISTINCT COUNT(NO_MUNICIPIO) AS Num_Municpios_Distintos FROM read_csv('censoescola_2024.csv')",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: municipio"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 14,
         "pergunta": "Qual é o total de matrículas da educação básica em São Paulo?",
-        "sql_gerado": "SELECT SUM(matriculas) FROM alunos JOIN escolas ON alunos.id_escola = escolas.id WHERE escolas.nome_localidade = 'São Paulo' AND alunos.id_nivel = 1",
+        "sql_gerado": "SELECT SUM(QT_MAT_BAS) AS Total_MAT_BAS FROM read_csv(\"censoescolar2024.csv\", delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'SP' AND SG_UF = 'SP'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: matriculas"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 15,
         "pergunta": "Quantos registros existem por dependência administrativa?",
-        "sql_gerado": "SELECT department_name, COUNT(*) FROM employees GROUP BY department_name",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS QT_DEP FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_DEPENDENCIA",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: department_name"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 16,
         "pergunta": "Quantos registros existem por situação de funcionamento?",
-        "sql_gerado": "SELECT situação_de_funcionamento, COUNT(*) AS registro_count FROM tabela_de_situação_de_funcionamento GROUP BY situação_de_funcionamento",
+        "sql_gerado": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS QT_DE_REGISTROS FROM read_csv(FILENAME, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_SITUACAO_FUNCIONAMENTO",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 17,
         "pergunta": "Quantos registros existem por localização urbana ou rural?",
-        "sql_gerado": "SELECT localizacao, COUNT(*) as registro_count FROM tabela_veiculos GROUP BY localizacao",
+        "sql_gerado": "SELECT TP_LOCALIZACAO, COUNT(*) AS QT_DE_REGISTROS FROM read_csv('nome_do_arquivo.csv') GROUP BY TP_LOCALIZACAO",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: localizacao"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 18,
         "pergunta": "Quantos registros existem por região do Brasil?",
-        "sql_gerado": "SELECT REGION, COUNT(*) FROM table_name GROUP BY REGION",
+        "sql_gerado": "SELECT NO_REGIAO FROM read_csv('censo_escolar_2024.csv') GROUP BY NO_REGIAO",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: REGION"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 19,
         "pergunta": "Quais são as cinco regiões com mais registros no Censo Escolar?",
-        "sql_gerado": "SELECT Region, COUNT(*) as Total_Registros FROM Census_Schools GROUP BY Region ORDER BY Total_Registros DESC LIMIT 5",
+        "sql_gerado": "SELECT NO_REGIAO, COUNT(*) AS QT_REGIAO FROM read_csv(file='censoescolar.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO ORDER BY QT_REGIAO DESC LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: Region"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 20,
         "pergunta": "Quais são as cinco regiões com menos registros no Censo Escolar?",
-        "sql_gerado": "SELECT Region, COUNT(*) AS NumberOfRecords\nFROM SchoolCensus\nGROUP BY Region\nORDER BY NumberOfRecords ASC\nLIMIT 5",
-        "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: Region"
+        "status": "erro_execucao",
+        "erro": "tuple index out of range"
     },
     {
         "id": 21,
         "pergunta": "Quantas categorias diferentes de dependência administrativa existem no Censo Escolar?",
-        "sql_gerado": "SELECT COUNT(DISTINCT categoria_dependencia_administrativa) AS numero_de_categorias FROM Censo_Escolar",
+        "sql_gerado": "SELECT COUNT(DISTINCT TP_DEPENDENCIA) AS QT_DEP_DIFERENTES FROM read_csv('censoescolar2024.csv')",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: categoria_dependencia_administrativa"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 22,
         "pergunta": "Quantas categorias diferentes de situação de funcionamento existem no Censo Escolar?",
-        "sql_gerado": "SELECT COUNT(DISTINCT situacao_escolar) AS quantidade_diferentes_situacao_escolar FROM censo_escolar",
-        "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: situacao_escolar"
+        "sql_gerado": "SELECT COUNT(DISTINCT TP_SITUACAO_FUNCIONAMENTO) AS QTIDADE_DIFERENTES_SITUACAO_FUNCIONAMENTO FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true)",
+        "status": "correta",
+        "resultado_baseline": 3,
+        "comparacao": true
     },
     {
         "id": 23,
         "pergunta": "Quantos registros possuem dependência administrativa igual a 4?",
-        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE dependencia_administrativa = 4",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_DEPENDENCIA = '4'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 24,
         "pergunta": "Quantos registros possuem dependência administrativa igual a 3",
-        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE dependencia_administrativa = 3",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE TP_DEPENDENCIA = '3'",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 25,
         "pergunta": "Quantos registros possuem a localização igual a 1",
-        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE location = 1",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar2024.csv') WHERE IN_LOCALIZACAO = 1",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: location"
+        "motivo": "Coluna SQL não autorizada: IN_LOCALIZACAO"
     },
     {
         "id": 26,
         "pergunta": "Quantos registros possuem a situação de funcionamento igual a 1?",
-        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE situação_de_funcionamento = 1",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censo_2024.csv') WHERE TP_SITUACAO_FUNCIONAMENTO = 1",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 27,
         "pergunta": "Quantas regiões diferentes aparecem no Censo Escolar de 2024?",
-        "sql_gerado": "SELECT COUNT(DISTINCT regiao) FROM census_2024",
+        "sql_gerado": "SELECT DISTINCT NO_REGIAO FROM read_csv('censo_escolar_2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true)",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: regiao"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 28,
         "pergunta": "Quantas categorias diferentes de localização existem no Censo Escolar?",
-        "sql_gerado": "SELECT COUNT(DISTINCT localizacao) AS categoria_diferentes FROM Censo_Escolar",
+        "sql_gerado": "SELECT DISTINCT TP_LOCALIZACAO FROM read_csv('censo_escolar_2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true)",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: localizacao"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 29,
         "pergunta": "Quantos registros existem por dependência administrativa no estado de São Paulo?",
-        "sql_gerado": "SELECT COUNT(DISTINCT dependentes), estado FROM tabela_dep_adminISTRATIVA WHERE estado = 'SP' GROUP BY estado",
+        "sql_gerado": "SELECT COUNT(CO_ENTIDADE), TP_DEPENDENCIA FROM read_csv('censo_escolar_2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'SP' AND TP_DEPENDENCIA IS NOT NULL GROUP BY TP_DEPENDENCIA",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: estado"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 30,
         "pergunta": "Quantos registros existem por situação de funcionamento no estado de São Paulo?",
-        "sql_gerado": "SELECT COUNT(*), situação_de_funcionamento FROM sao_paulo GROUP BY situação_de_funcionamento",
+        "sql_gerado": "SELECT TP_SITUACAO_FUNCIONAMENTO, COUNT(*) AS QT_DE_REGISTROS FROM read_csv('censoescolar2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) WHERE NO_UF = 'SP' GROUP BY TP_SITUACAO_FUNCIONAMENTO",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 31,
         "pergunta": "Quais são as três dependências administrativas com mais registros?",
-        "sql_gerado": "SELECT dependency_name, COUNT(*) AS count\nFROM dependencies_table\nGROUP BY dependency_name\nORDER BY count DESC\nLIMIT 3",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, COUNT(*) AS QT_DEP FROM read_csv('censoescolar2024.csv') GROUP BY TP_DEPENDENCIA ORDER BY QT_DEP DESC LIMIT 3",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: dependency_name"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 32,
         "pergunta": "Quais são as duas situações de funcionamento com menos registros?",
-        "sql_gerado": "SELECT situação_de_funcionamento, COUNT(*) AS registro_count FROM tabela_name GROUP BY situação_de_funcionamento ORDER BY registro_count ASC LIMIT 2",
+        "sql_gerado": "SELECT TP_SITUACAO_FUNCIONAMENTO FROM read_csv('path/to/file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_SITUACAO_FUNCIONAMENTO, COUNT(*) ORDER BY COUNT(*) LIMIT 2",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: situação_de_funcionamento"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 33,
         "pergunta": "Quantos registros possuem IN_INTERNET com valor 1?",
-        "sql_gerado": "SELECT COUNT(*) FROM table_name WHERE IN_INTERNET = 1",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar2024.csv') WHERE IN_INTERNET = 1;",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 34,
         "pergunta": "Agrupe os registros pelo campo IN_INTERNET e conte quantos registros existem em cada valor desse campo.",
-        "sql_gerado": "SELECT IN_INTERNET, COUNT(*) FROM your_table_name GROUP BY IN_INTERNET",
+        "sql_gerado": "SELECT IN_INTERNET, COUNT(*) FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_INTERNET",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 35,
         "pergunta": "Agrupe os registros pelo campo IN_BIBLIOTECA e conte quantos registros existem em cada valor desse campo.",
-        "sql_gerado": "SELECT IN_BIBLIOTECA, COUNT(*) FROM YOUR_TABLE_NAME GROUP BY IN_BIBLIOTECA",
-        "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "sql_gerado": "SELECT IN_BIBLIOTECA, COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_BIBLIOTECA",
+        "status": "incorreta",
+        "resultado_baseline": "0",
+        "comparacao": false
     },
     {
         "id": 36,
         "pergunta": "Para cada valor distinto encontrado na coluna IN_BIBLIOTECA, mostre esse valor e a quantidade total de registros correspondentes. Não use filtros nem outras colunas.",
-        "sql_gerado": "SELECT IN_BIBLIOTECA, COUNT(*) FROM your_table_name GROUP BY IN_BIBLIOTECA",
-        "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "sql_gerado": "SELECT DISTINCT IN_BIBLIOTECA , COUNT(*) FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_BIBLIOTECA",
+        "status": "correta",
+        "resultado_baseline": [
+            {
+                "estado": "0",
+                "registros": 114496
+            },
+            {
+                "estado": "1",
+                "registros": 66569
+            },
+            {
+                "estado": null,
+                "registros": 34480
+            }
+        ],
+        "comparacao": true
     },
     {
         "id": 37,
         "pergunta": "Quantos registros possuem IN_QUADRA_ESPORTES com valor 1?",
-        "sql_gerado": "SELECT COUNT(*) FROM tabela_name WHERE IN_QUADRA_ESPORTES = 1",
-        "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "status": "erro_execucao",
+        "erro": "Parser Error: syntax error at or near \"[\"\n\nLINE 1: SELECT COUNT(*) FROM READ_CSV(?)[IN_QUADRA_ESPORTES = 1] LIMIT 1000\n                                        ^"
     },
     {
         "id": 38,
         "pergunta": "Quantos registros possuem IN_AGUA_REDE_PUBLICA com valor 1?",
-        "sql_gerado": "SELECT COUNT(*) FROM your_table_name WHERE IN_AGUA_REDE_PUBLICA = 1",
+        "sql_gerado": "SELECT COUNT(*) FROM read_csv('censoescolar2024.csv') WHERE IN_AGUA_REDE_PUBLICA = 1;",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 39,
         "pergunta": "Quantos registros possuem IN_ENERGIA_REDE_PUBLICA com valor 1?",
-        "sql_gerado": "SELECT COUNT(*) FROM tabela_name WHERE IN_ENERGIA_REDE_PUBLICA = 1",
-        "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "status": "erro_execucao",
+        "erro": "Parser Error: syntax error at or near \"[\"\n\nLINE 1: SELECT COUNT(*) FROM READ_CSV(?)[IN_ENERGIA_REDE_PUBLICA = 1] LIMIT 1000\n                                        ^"
     },
     {
         "id": 40,
         "pergunta": "Qual é a soma de matrículas da educação básica no conjunto de dados?",
-        "sql_gerado": "SELECT SUM(matriculas) FROM dados_educacao_basica",
+        "sql_gerado": "SELECT SUM(QT_MAT_BAS) FROM read_csv('nome_do_arquivo.csv', delim=';', encoding='latin-1', header=true, all_varchar=true)",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: matriculas"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 41,
         "pergunta": "Qual é a soma de matrículas do ensino fundamental no conjunto de dados?",
-        "sql_gerado": "SELECT SUM(matriculas) FROM dados WHERE nivel_educacional = 'Ensino Fundamental'",
+        "sql_gerado": "SELECT SUM(CASE WHEN TP_DEPENDENCIA = 'E' THEN QT_MAT_FUND ELSE 0 END) AS SomaMatr_Basico FROM read_csv(?);",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: matriculas"
+        "motivo": "Função SQL não autorizada: CASE"
     },
     {
         "id": 42,
         "pergunta": "Calcule a soma de QT_MAT_MED em todos os registros, sem aplicar filtros.",
-        "sql_gerado": "SELECT SUM(QT_MAT_MED) FROM your_table_name_HERE",
+        "sql_gerado": "SELECT SUM(QT_MAT_MED) FROM read_csv('censoescolar2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true)",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 43,
         "pergunta": "Qual é a soma de matrículas da educação infantil no conjunto de dados?",
-        "sql_gerado": "SELECT SUM(matriculas) FROM dados_educacao_infantil",
+        "sql_gerado": "SELECT SUM(CAST(QT_MAT_INF AS INT)) AS Total_MAT_INF FROM read_csv('censoescolar2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true)",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: matriculas"
+        "motivo": "Função SQL não autorizada: CAST"
     },
     {
         "id": 44,
         "pergunta": "Qual é a soma de matrículas da educação básica por dependência administrativa?",
-        "sql_gerado": "SELECT dependencia_administrativa, SUM(matriculas) FROM edicao GROUP BY dependencia_administrativa",
+        "sql_gerado": "SELECT TP_DEPENDENCIA, SUM(QT_MAT_BAS) as Soma_QT_MAT_BAS FROM read_csv(file='path/to/your/file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY TP_DEPENDENCIA",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: dependencia_administrativa"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 45,
         "pergunta": "Qual é a soma de matrículas da educação básica por região?",
-        "sql_gerado": "SELECT region, SUM(matriculas) FROM educacao_basica GROUP BY region",
+        "sql_gerado": "SELECT NO_REGIAO, SUM(QT_MAT_BAS) AS SomaMatriculasBAS FROM read_csv(file='nome_do_arquivo.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_REGIAO",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: region"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 46,
         "pergunta": "Quais são os cinco municípios com mais registros no conjunto de dados?",
-        "sql_gerado": "SELECT Municipio, COUNT(*) AS TotalDeRegistros\nFROM nome_tabela\nGROUP BY Municipio\nORDER BY TotalDeRegistros DESC\nLIMIT 5",
+        "sql_gerado": "SELECT NO_MUNICIPIO, COUNT(*) as Total_Registros FROM read_csv('arquivo.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_MUNICIPIO ORDER BY Total_Registros DESC LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Coluna SQL não autorizada: Municipio"
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 47,
         "pergunta": "Qual é a soma dos valores da coluna QT_MAT_BAS para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
-        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_BAS) AS TotalQT_MAT_BAS\nFROM your_table_name\nGROUP BY NO_UF\nORDER BY TotalQT_MAT_BAS DESC\nLIMIT 5",
+        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_BAS) as TotalQT_MAT_BAS FROM read_csv(file='nome_do_arquivo.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY TotalQT_MAT_BAS DESC LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 48,
         "pergunta": "Qual é a soma dos valores da coluna QT_MAT_FUND para cada estado identificado pela coluna NO_UF? Mostre os cinco estados com os maiores totais, em ordem decrescente.",
-        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_FUND) AS TotalQT_MAT_FUND\nFROM your_table_name\nGROUP BY NO_UF\nORDER BY TotalQT_MAT_FUND DESC\nLIMIT 5",
+        "sql_gerado": "SELECT NO_UF, SUM(QT_MAT_FUND) as TOTAL FROM read_csv('file.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY NO_UF ORDER BY TOTAL DESC LIMIT 5",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     },
     {
         "id": 49,
         "pergunta": "Mostre cada valor de TP_LOCALIZACAO e a soma de QT_MAT_BAS correspondente, agrupando os resultados por TP_LOCALIZACAO.",
-        "sql_gerado": "SELECT TP_LOCALIZACAO, SUM(QT_MAT_BAS) FROM tabela_name GROUP BY TP_LOCALIZACAO",
-        "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "status": "erro_execucao",
+        "erro": "Binder Error: No function matches the given name and argument types 'sum(VARCHAR)'. You might need to add explicit type casts.\n\tCandidate functions:\n\tsum(arg DECIMAL) -> DECIMAL\n\tsum(arg BOOLEAN, /) -> HUGEINT\n\tsum(arg SMALLINT, /) -> HUGEINT\n\tsum(arg INTEGER, /) -> HUGEINT\n\tsum(arg BIGINT, /) -> HUGEINT\n\tsum(arg HUGEINT, /) -> HUGEINT\n\tsum(arg DOUBLE, /) -> DOUBLE\n\tsum(arg BIGNUM, /) -> BIGNUM\n\n\nLINE 1: SELECT TP_LOCALIZACAO, SUM(QT_MAT_BAS) AS QT_MAT_BAS_SOMADA FROM READ_CSV(?, delim...\n                               ^^^^^^^^^^^^^^^"
     },
     {
         "id": 50,
         "pergunta": "Agrupe os registros pelo campo IN_BANDA_LARGA e conte quantos registros existem em cada valor desse campo.",
-        "sql_gerado": "SELECT IN_BANDA_LARGA, COUNT(*) FROM tabela_name GROUP BY IN_BANDA_LARGA",
+        "sql_gerado": "SELECT IN_BANDA_LARGA, COUNT(*) FROM read_csv('censoescolar2024.csv', delim=';', encoding='latin-1', header=true, all_varchar=true) GROUP BY IN_BANDA_LARGA",
         "status": "bloqueada",
-        "motivo": "Apenas a fonte de dados autorizada é permitida."
+        "motivo": "O caminho do arquivo deve ser parametrizado."
     }
 ]

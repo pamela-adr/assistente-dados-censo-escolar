@@ -1,6 +1,8 @@
 
 import os
 import ollama
+import sqlglot
+from sqlglot import exp
 
 try:
     from .seguranca import validar_sql
@@ -354,10 +356,18 @@ def gerar_sql_baseline(pergunta: str) -> str:
             {
                 "role": "system",
                 "content": (
-                    "Transforme a pergunta em uma consulta SQL DuckDB. "
-                    "Retorne somente o SQL, sem Markdown ou explicações. "
-                    "Use apenas SELECT."
-                ),
+    "Transforme perguntas sobre o Censo Escolar 2024 em consultas SQL DuckDB. "
+    "Os dados estão em um arquivo CSV e devem ser consultados usando: "
+    "FROM read_csv(?, delim=';', encoding='latin-1', header=true, all_varchar=true). "
+    "As colunas disponíveis são: "
+    "NO_UF, SG_UF, NO_MUNICIPIO, CO_MUNICIPIO, CO_ENTIDADE, "
+    "TP_DEPENDENCIA, QT_MAT_BAS, QT_MAT_FUND, QT_MAT_MED, "
+    "QT_MAT_INF, QT_TUR_BAS, QT_DOC_BAS, TP_SITUACAO_FUNCIONAMENTO, "
+    "NO_REGIAO, TP_LOCALIZACAO, IN_INTERNET, IN_BIBLIOTECA, "
+    "IN_QUADRA_ESPORTES, IN_AGUA_REDE_PUBLICA, "
+    "IN_ENERGIA_REDE_PUBLICA, IN_BANDA_LARGA. "
+    "Use somente SELECT e retorne apenas o SQL, sem Markdown ou explicações."
+),
             },
             {"role": "user", "content": pergunta},
         ],
@@ -365,9 +375,57 @@ def gerar_sql_baseline(pergunta: str) -> str:
 
     return resposta.message.content.strip()
 
+def interpretar_sql(sql: str) -> dict:
+    """Identifica a estrutura principal de uma consulta SQL."""
 
-def explicar_sql(sql: str) -> str:
+    arvore = sqlglot.parse_one(sql, read="duckdb")
+
+    contagem = arvore.find(exp.Count) is not None
+    agrupamento = arvore.args.get("group")
+    filtro = arvore.args.get("where")
+    ordenacao = arvore.args.get("order")
+    limite = arvore.args.get("limit")
+
+    if limite and contagem and not agrupamento:
+        significado_limite = (
+            "O LIMIT não altera a contagem. "
+            "A consulta retorna uma única linha com o total calculado."
+        )
+    elif limite and agrupamento:
+        significado_limite = (
+            f"O LIMIT restringe a quantidade de grupos retornados a "
+            f"{limite.expression.this}."
+        )
+    elif limite:
+        significado_limite = (
+            f"O LIMIT restringe a quantidade de linhas retornadas a "
+            f"{limite.expression.this}."
+        )
+    else:
+        significado_limite = "A consulta não possui LIMIT."
+
+    return {
+        "contagem": contagem,
+        "agrupamento": (
+            [coluna.sql(dialect="duckdb") for coluna in agrupamento.expressions]
+            if agrupamento else []
+        ),
+        "filtro": filtro.sql(dialect="duckdb") if filtro else None,
+        "ordenacao": (
+            [item.sql(dialect="duckdb") for item in ordenacao.expressions]
+            if ordenacao else []
+        ),
+        "limite": (
+            limite.expression.this
+            if limite else None
+        ),
+        "significado_limite": significado_limite,
+    }
+
+def explicar_sql(sql: str, pergunta: str = "") -> str:
     """Explica em linguagem simples o que a consulta SQL faz."""
+
+    estrutura = interpretar_sql(sql)
 
     cliente = ollama.Client(
         host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
@@ -379,40 +437,40 @@ def explicar_sql(sql: str) -> str:
         messages=[
             {
                 "role": "system",
-                "content": (
-                    "LIMIT apenas restringe a quantidade de linhas retornadas.\n"
-                    "LIMIT não ordena os resultados nem seleciona os maiores valores.\n"
-                    "Só diga que os resultados estão ordenados quando existir ORDER BY.\n"
-                    "Sem ORDER BY, não afirme que existe uma ordem específica.\n"
-                    "É proibido atribuir qualquer ordem aos resultados quando não houver ORDER BY.\n"
-                    "Não interprete LIMIT como os maiores, menores, primeiros ou últimos valores.\n"
-                    "Se houver LIMIT sem ORDER BY, diga apenas que a consulta limita a quantidade de linhas retornadas.\n"
-                    "Explique a consulta SQL em português simples e "
-                    "de forma curta.\n"
-                    "GROUP BY agrupa pelos campos que aparecem após GROUP BY, "
-                    "nunca pela função COUNT.\n"
-                    "Não descreva read_csv como filtro; ele lê os dados do arquivo.\n"
-                    "Não repita informações na explicação.\n"
-                    "Descreva somente o que realmente aparece no SQL.\n"
-                    "Explique o que é selecionado, os filtros, "
-                    "agrupamentos, ordenação e limite, quando existirem.\n"
-                    "COUNT(*) conta todas as linhas que atendem aos filtros.\n"
-                    "LIMIT limita a quantidade de linhas retornadas, "
-                    "não o total contado por COUNT(*).\n"
-                    "GROUP BY reúne registros com o mesmo valor.\n"
-                    "ORDER BY organiza os resultados.\n"
+                  "content": (
+                    "Você é um explicador de consultas SQL para usuários leigos.\n"
+                    "Responda sempre em português brasileiro.\n"
+                    "Use no máximo duas frases curtas.\n"
+                    "Explique o objetivo da consulta, não a implementação técnica.\n"
+                    "Nunca mencione CSV, read_csv, encoding, VARCHAR ou delimitadores.\n"
+                    "COUNT(*) significa contar todos os registros que atendem aos filtros.\n"
+                    "GROUP BY significa separar os registros por categoria.\n"
                     "NO_UF representa o nome do estado.\n"
                     "SG_UF representa a sigla do estado.\n"
-                    "Não invente filtros, ordenações ou informações.\n"
-                    "Não diga que uma contagem é aproximada sem motivo.\n"
-                    "Não explique os parâmetros técnicos do CSV, "
-                    "a menos que sejam importantes para a pergunta."
-                    
+                    "Quando SG_UF for SP, MG, BA ou PR, identifique "
+                    "respectivamente São Paulo, Minas Gerais, Bahia ou Paraná.\n"
+                    "LIMIT limita as linhas do resultado, não os registros "
+                    "contados por COUNT(*).\n"
+                    "Quando houver COUNT(*) sem GROUP BY, explique a contagem total.\n"
+                    "Quando houver GROUP BY e COUNT(*), explique a contagem por categoria.\n"
+                    "ORDER BY DESC indica ordem decrescente.\n"
+                    "ORDER BY ASC indica ordem crescente.\n"
+                    "LIMIT 5 com ORDER BY DESC significa cinco maiores resultados.\n"
+                    "LIMIT 5 com ORDER BY ASC significa cinco menores resultados.\n"
+                    "Sem ORDER BY, nunca diga maiores, menores ou primeiros colocados.\n"
+                    "Não invente filtros, resultados ou informações.\n"
+                    "Não descreva operações que não estejam presentes no SQL.\n"
                 ),
             },
             {
                 "role": "user",
-                "content": f"Explique esta consulta SQL:\n{sql}",
+                "content": (
+                    f"Pergunta original do usuário:\n{pergunta}\n\n"
+                    f"Interpretação estrutural do SQL: {estrutura}\n\n"
+                    f"Consulta SQL gerada:\n{sql}\n\n"
+                    "Explique, em linguagem simples, como a consulta responde "
+                    "à pergunta original. Não invente operações que não estejam no SQL."
+                ),
             },
         ],
     )

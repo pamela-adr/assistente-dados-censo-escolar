@@ -16,9 +16,22 @@ Os resultados foram comparados com consultas SQL de referência, considerando se
 
 ## 3. Comparação com o baseline
 
-O baseline foi submetido às mesmas 50 perguntas. Entretanto, nenhuma das consultas foi executada: as 50 foram bloqueadas.
+O baseline foi submetido às mesmas 50 perguntas utilizadas na avaliação do sistema principal, utilizando o modelo Qwen 2.5 3B e um prompt simplificado, com informações básicas sobre a fonte de dados e as colunas disponíveis.
 
-Por esse motivo, não foi possível calcular sua acurácia. O resultado demonstra que o método utilizado como baseline não conseguiu atender às perguntas avaliadas.
+Os resultados foram:
+
+- Perguntas testadas: 50
+- Consultas bloqueadas pelo validador: 46
+- Erros de execução: 2
+- Consultas executadas corretamente: 2
+- Acurácia entre as consultas executadas: 100%
+- Taxa de acerto considerando as 50 perguntas: 4%
+
+As duas consultas executadas corretamente foram as perguntas 37 e 38. A maioria das consultas foi bloqueada porque o modelo informou caminhos de arquivos diretamente, em vez de utilizar o parâmetro esperado pelo sistema. Também ocorreram tentativas de utilizar funções e colunas não autorizadas.
+
+Embora a acurácia entre as consultas executadas tenha sido de 100%, esse percentual considera apenas duas consultas. Para a comparação geral, considerando as 50 perguntas, o baseline apresentou taxa de acerto de 4%, enquanto o sistema principal alcançou 94%.
+
+Os resultados indicam que o prompt simplificado teve desempenho inferior ao prompt completo utilizado pelo sistema principal.
 
 ## 4. Avaliação das explicações
 

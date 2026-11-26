@@ -12,4 +12,4 @@ A avaliação comparou os resultados das consultas SQL
 geradas pelo modelo com os resultados das consultas
 SQL de referência.
 
-Data da avaliação: 13/11/2026
+Data da avaliação: 25/11/2026

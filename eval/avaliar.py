@@ -549,7 +549,7 @@ def avaliar_explicacoes():
 
         try:
             sql = gerar_sql_validado(pergunta["pergunta"])
-            explicacao = explicar_sql(sql)
+            explicacao = explicar_sql(sql, pergunta["pergunta"])
 
             resultados.append({
                 "id": pergunta["id"],

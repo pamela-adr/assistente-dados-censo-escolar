@@ -1,4 +1,4 @@
-\# Índice de Evidências
+\## Índice de Evidências
 
 
 
@@ -8,11 +8,12 @@ Este diretório reúne os arquivos utilizados para demonstrar e documentar o des
 
 \## Vídeos de demonstração
 
+Os vídeos de demonstração do projeto estão disponíveis no Google Drive:
 
+[ Acessar pasta com os vídeos](https://drive.google.com/drive/folders/11el6-ENkzEThjx-stULTM31b5OD69mnY?usp=sharing)
 
-\- `video/primeira.demonstração\_em audio.mp4` — gravação com narração sobre o projeto.
-
-\- `video/segunda\_demonstração\_tela\_streamlit.mp4` — demonstração da aplicação em funcionamento no Streamlit.
+- `primeira.demonstração_em audio.mp4` — gravação com narração sobre o projeto.
+- `segunda_demonstração_tela_streamlit.mp4` — demonstração da aplicação em funcionamento no Streamlit.
 
 
 

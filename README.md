@@ -50,6 +50,7 @@ Durante o desenvolvimento, implementei as seguintes funcionalidades:
 - Estimar o custo das consultas com base nos critérios definidos no projeto.
 - Exibir os resultados em tabelas e gráficos.
 - Apresentar uma explicação da consulta em linguagem simples.
+- A estimativa utiliza uma classificação heurística de complexidade, dividida em níveis baixo, médio e alto. Ela não representa o custo financeiro nem mede diretamente o tempo real de execução da consulta.
 
 ## 6. Segurança das consultas
 
@@ -67,7 +68,7 @@ As regras implementadas incluem:
 - Controlar a leitura do arquivo CSV.
 - Limitar os resultados a 1.000 linhas.
 
-Também criei testes automatizados para verificar se essas regras estão funcionando. Nos testes realizados, os 29 casos de segurança foram aprovados.
+Também criei testes automatizados para verificar se essas regras estão funcionando. Nos testes automatizados, foram aprovados 33 casos, sendo 29 relacionados à segurança das consultas SQL e 4 relacionados à identificação de ambiguidades nas perguntas.
 
 A documentação dessas regras está em [`docs/seguranca.md`](docs/seguranca.md).
 
@@ -136,12 +137,13 @@ Também fiz um teste utilizando o mesmo modelo, mas com uma instrução mais sim
 O resultado foi:
 
 - Perguntas avaliadas: 50.
-- Consultas bloqueadas: 46.
-- Erros de execução: 2.
+- Consultas bloqueadas: 43.
+- Erros de execução: 4.
 - Consultas executadas corretamente: 2.
+- Consultas executadas incorretamente: 1.
 - Taxa de acerto geral: 4%.
 
-As duas consultas executadas corretamente foram as perguntas 37 e 38. A maioria das consultas foi bloqueada pelo validador devido à utilização de caminhos de arquivos diretamente, em vez do parâmetro esperado pelo sistema. Também ocorreram erros de execução.
+As duas consultas executadas corretamente foram as perguntas 22 e 36. A maioria das consultas foi bloqueada pelo validador devido à utilização de caminhos de arquivos diretamente, em vez do parâmetro esperado pelo sistema. Também ocorreram erros de execução e uma consulta foi executada incorretamente.
 
 O baseline apresentou uma taxa de acerto geral de 4%, considerando as 50 perguntas avaliadas. Esse resultado foi inferior ao desempenho de 94% obtido pelo sistema principal.
 

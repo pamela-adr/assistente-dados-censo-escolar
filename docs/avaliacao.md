@@ -16,20 +16,22 @@ Os resultados foram comparados com consultas SQL de referência, considerando se
 
 ## 3. Comparação com o baseline
 
-O baseline foi submetido às mesmas 50 perguntas utilizadas na avaliação do sistema principal, utilizando o modelo Qwen 2.5 3B e um prompt simplificado, com informações básicas sobre a fonte de dados e as colunas disponíveis.
+Para comparar os resultados, utilizei as mesmas 50 perguntas da avaliação principal, mas com o modelo Qwen 2.5 3B e um prompt mais simples, contendo informações básicas sobre os dados e as colunas disponíveis.
 
-Os resultados foram:
+O resultado foi:
 
-- Perguntas testadas: 50
-- Consultas bloqueadas pelo validador: 46
-- Erros de execução: 2
-- Consultas executadas corretamente: 2
-- Acurácia entre as consultas executadas: 100%
-- Taxa de acerto considerando as 50 perguntas: 4%
+- Perguntas testadas: 50.
+- Consultas bloqueadas: 43.
+- Erros de execução: 4.
+- Consultas executadas corretamente: 2.
+- Consultas executadas incorretamente: 1.
+- Taxa de acerto geral: 4%.
 
-As duas consultas executadas corretamente foram as perguntas 37 e 38. A maioria das consultas foi bloqueada porque o modelo informou caminhos de arquivos diretamente, em vez de utilizar o parâmetro esperado pelo sistema. Também ocorreram tentativas de utilizar funções e colunas não autorizadas.
+As perguntas que tiveram respostas corretas foram a 22 e a 36. A maior parte das consultas foi bloqueada porque o modelo informou diretamente o caminho dos arquivos, em vez de utilizar o parâmetro esperado pelo sistema. Também aconteceram erros durante a execução de algumas consultas.
 
-Embora a acurácia entre as consultas executadas tenha sido de 100%, esse percentual considera apenas duas consultas. Para a comparação geral, considerando as 50 perguntas, o baseline apresentou taxa de acerto de 4%, enquanto o sistema principal alcançou 94%.
+Das três consultas que chegaram a ser executadas e tiveram resultado comparável, duas estavam corretas, o que representa 66,67% de acerto. Considerando todas as 50 perguntas, o baseline teve 4% de acerto, enquanto o sistema principal alcançou 94%.
+
+Com essa comparação, foi possível observar que o prompt mais completo utilizado no sistema principal apresentou resultados melhores do que o prompt simplificado do baseline.
 
 Os resultados indicam que o prompt simplificado teve desempenho inferior ao prompt completo utilizado pelo sistema principal.
 
